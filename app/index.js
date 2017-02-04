@@ -1,15 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
+import AppContainer from './app'
 
-class AppContainer extends Component {
-  render() {
-    return <div>Hello MERN!</div>;
-  }
+const render = () => {
+  const MOUNT_NODE = document.getElementById('app')
+
+  ReactDOM.render(
+    <AppContainer />,
+    MOUNT_NODE
+  )
 }
 
-const MOUNT_NODE = document.getElementById('app')
-
-ReactDOM.render(
-  <AppContainer />,
-  MOUNT_NODE
-)
+render()
