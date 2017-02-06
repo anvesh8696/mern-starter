@@ -1,16 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Provider } from 'react-redux'
-
-import injectTapEventPlugin from 'react-tap-event-plugin'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-
-injectTapEventPlugin()
+import { browserHistory, Router } from 'react-router'
 
 class AppContainer extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
-    children: PropTypes.object.isRequired,
+    routes: PropTypes.object.isRequired,
   }
 
   shouldComponentUpdate() {
@@ -18,14 +13,14 @@ class AppContainer extends Component {
   }
 
   render() {
-    const { store, children } = this.props
+    const { store, routes } = this.props
 
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme({userAgent: navigator.userAgent})}>
-        <Provider store={store}>
-          {children}
-        </Provider>
-      </MuiThemeProvider>
+      <Provider store={store}>
+        <Router history={browserHistory}>
+          {routes}
+        </Router>
+      </Provider>
     )
   }
 }

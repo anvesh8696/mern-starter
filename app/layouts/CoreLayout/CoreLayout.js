@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import Header from '../../components/Header'
 
 export const CoreLayout = ({children}) => (
-  <div>
+  <div className="container">
     <Header />
     {children}
   </div>

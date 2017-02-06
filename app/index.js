@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { browserHistory, Router } from 'react-router'
 
 import createStore from './store/createStore'
 import AppContainer from './containers/AppContainer'
@@ -13,11 +12,7 @@ const MOUNT_NODE = document.getElementById('app')
 
 const render = () => {
   ReactDOM.render(
-    <AppContainer store={store}>
-      <Router history={browserHistory}>
-        {routes}
-      </Router>
-    </AppContainer>,
+    <AppContainer store={store} routes={routes} />,
     MOUNT_NODE
   )
 }

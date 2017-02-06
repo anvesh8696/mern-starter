@@ -2,6 +2,7 @@ import express from 'express'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router';
+import { Provider } from 'react-redux'
 
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
@@ -10,7 +11,6 @@ import webpackConfig from '../webpack.config'
 
 import createStore from '../app/store/createStore'
 import routes from '../app/routes'
-import AppContainer from '../app/containers/AppContainer'
 
 const app = express()
 
@@ -38,9 +38,9 @@ const handleRender = (req, res, next) => {
     const store = createStore(initialState)
 
     const html = renderToString(
-      <AppContainer store={store}>
+      <Provider store={store}>
         <RouterContext {...renderProps} />
-      </AppContainer>
+      </Provider>
     )
 
     const preloadedState = store.getState()
@@ -58,7 +58,7 @@ const renderFullPage = (html, preloadedState) => {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="mobile-web-app-capable" content="yes">
         <title>MERN Starter</title>
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       </head>
       <body>
         <div id="app" style="height: 100%">${html}</div>
