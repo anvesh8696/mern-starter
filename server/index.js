@@ -7,14 +7,14 @@ import { Provider } from 'react-redux'
 import webpack from 'webpack' // eslint-disable-line import/no-extraneous-dependencies
 import webpackDevMiddleware from 'webpack-dev-middleware' // eslint-disable-line import/no-extraneous-dependencies
 import webpackHotMiddleware from 'webpack-hot-middleware' // eslint-disable-line import/no-extraneous-dependencies
-import webpackConfig from '../webpack.config'
+
+import projectConfig from '../config/project.config'
+import webpackConfig from '../config/webpack.config'
 
 import createStore from '../app/store/createStore'
 import routes from '../app/routes'
 
 const app = express()
-
-const port = process.env.PORT || 8000
 
 const renderFullPage = (html, preloadedState) => (
   `
@@ -72,7 +72,7 @@ const handleRender = (req, res, next) => {
   })
 }
 
-app.use(express.static('dist'))
+app.use(express.static(projectConfig.dir_dist))
 
 const compiler = webpack(webpackConfig)
 
@@ -89,6 +89,6 @@ app.use(webpackHotMiddleware(compiler, {
 
 app.use(handleRender)
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}.`)
+app.listen(projectConfig.port, () => {
+  console.log(`Server listening on port ${projectConfig.port}.`)
 })

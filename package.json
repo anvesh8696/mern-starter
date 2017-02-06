@@ -4,7 +4,7 @@
   "description": "Get started with MERN (MongoDB, ExpressJS, React, NodeJS)",
   "main": "index.js",
   "scripts": {
-    "start": "webpack && babel-node server",
+    "start": "webpack --config 'config/webpack.config.js' && babel-node server",
     "test": "npm run eslint:src",
     "eslint:src": "eslint ./app ./server; exit 0"
   },

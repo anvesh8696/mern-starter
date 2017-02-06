@@ -1,14 +1,14 @@
-var path = require('path');
-var webpack = require('webpack');
+const webpack = require('webpack')
+const projectConfig = require('./project.config')
 
 module.exports = {
   entry: [
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    './app/index.js'
+    projectConfig.paths.app('index.js'),
   ],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: projectConfig.paths.dist(),
     publicPath: '/'
   },
   module: {
@@ -18,13 +18,13 @@ module.exports = {
         exclude: /node_modules/,
         loaders: [
           'react-hot-loader',
-          'babel-loader'
+          'babel-loader',
         ]
       }
     ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
   ]
-};
+}
