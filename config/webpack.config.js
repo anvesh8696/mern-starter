@@ -1,11 +1,16 @@
 const webpack = require('webpack')
 const projectConfig = require('./project.config')
 
+let APP_ENTRY = [
+  projectConfig.paths.app('index.js'),
+]
+
+if (projectConfig.env === 'development') {
+  APP_ENTRY.push('webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000')
+}
+
 module.exports = {
-  entry: [
-    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    projectConfig.paths.app('index.js'),
-  ],
+  entry: APP_ENTRY,
   output: {
     filename: 'bundle.js',
     path: projectConfig.paths.dist(),

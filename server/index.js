@@ -1,8 +1,4 @@
 import express from 'express'
-import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
-import { Provider } from 'react-redux'
 
 import webpack from 'webpack' // eslint-disable-line import/no-extraneous-dependencies
 import webpackDevMiddleware from 'webpack-dev-middleware' // eslint-disable-line import/no-extraneous-dependencies
@@ -11,82 +7,26 @@ import webpackHotMiddleware from 'webpack-hot-middleware' // eslint-disable-line
 import projectConfig from '../config/project.config'
 import webpackConfig from '../config/webpack.config'
 
-import createStore from '../app/store/createStore'
-import routes from '../app/routes'
+import handleRender from './render'
 
 const app = express()
 
-const renderFullPage = (html, preloadedState) => (
-  `
-  <!doctype html>
-  <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="mobile-web-app-capable" content="yes">
-      <title>MERN Starter</title>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    </head>
-    <body>
-      <div id="app" style="height: 100%">${html}</div>
-      <script>
-        window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
-      </script>
-      <script type="text/javascript" src="bundle.js"></script>
-    </body>
-  </html>
-  `
-)
+if (projectConfig.env === 'development') {
+  const compiler = webpack(webpackConfig)
 
-const handleRender = (req, res, next) => {
-  // eslint-disable-next-line consistent-return
-  match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
-    if (err) {
-      return res.status(500)
-    }
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    lazy: false,
+    publicPath: webpackConfig.output.publicPath,
+  }))
 
-    if (redirectLocation) {
-      return res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-    }
-
-    if (!renderProps) {
-      return next()
-    }
-
-    global.navigator = {
-      userAgent: req.headers['user-agent'],
-    }
-
-    const initialState = {}
-    const store = createStore(initialState)
-
-    const html = renderToString(
-      <Provider store={store}>
-        <RouterContext {...renderProps} />
-      </Provider> // eslint-disable-line comma-dangle
-    )
-
-    const preloadedState = store.getState()
-
-    res.send(renderFullPage(html, preloadedState))
-  })
+  app.use(webpackHotMiddleware(compiler, {
+    path: '/__webpack_hmr',
+    heartbeat: 10000,
+  }))
 }
 
 app.use(express.static(projectConfig.dir_dist))
-
-const compiler = webpack(webpackConfig)
-
-app.use(webpackDevMiddleware(compiler, {
-  noInfo: true,
-  publicPath: webpackConfig.output.publicPath,
-}))
-
-app.use(webpackHotMiddleware(compiler, {
-  log: console.log,
-  path: '/__webpack_hmr',
-  heartbeat: 10000,
-}))
-
 app.use(handleRender)
 
 app.listen(projectConfig.port, () => {
