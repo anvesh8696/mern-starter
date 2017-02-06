@@ -12,6 +12,10 @@ const app = express()
 const port = process.env.PORT || 8000
 
 const handleRender = (req, res) => {
+  global.navigator = {
+    userAgent: req.headers['user-agent']
+  };
+
   const html = renderToString(
     <AppContainer />
   )
@@ -28,6 +32,7 @@ const renderFullPage = (html) => {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="mobile-web-app-capable" content="yes">
         <title>MERN Starter</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
       </head>
       <body>
         <div id="app" style="height: 100%">${html}</div>
