@@ -1,15 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-import AppContainer from './app'
+import { browserHistory, Router } from 'react-router'
 
-injectTapEventPlugin()
+import createStore from './store/createStore'
+import AppContainer from './containers/AppContainer'
+import routes from './routes'
+
+const initialState = window.__INITIAL_STATE__
+const store = createStore(initialState)
+
+const MOUNT_NODE = document.getElementById('app')
 
 const render = () => {
-  const MOUNT_NODE = document.getElementById('app')
-
   ReactDOM.render(
-    <AppContainer />,
+    <AppContainer store={store}>
+      <Router history={browserHistory}>
+        {routes}
+      </Router>
+    </AppContainer>,
     MOUNT_NODE
   )
 }
