@@ -1,12 +1,12 @@
 import express from 'express'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { match, RouterContext } from 'react-router';
+import { match, RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
 
-import webpack from 'webpack'
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackHotMiddleware from 'webpack-hot-middleware'
+import webpack from 'webpack' // eslint-disable-line import/no-extraneous-dependencies
+import webpackDevMiddleware from 'webpack-dev-middleware' // eslint-disable-line import/no-extraneous-dependencies
+import webpackHotMiddleware from 'webpack-hot-middleware' // eslint-disable-line import/no-extraneous-dependencies
 import webpackConfig from '../webpack.config'
 
 import createStore from '../app/store/createStore'
@@ -16,7 +16,30 @@ const app = express()
 
 const port = process.env.PORT || 8000
 
+const renderFullPage = (html, preloadedState) => (
+  `
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="mobile-web-app-capable" content="yes">
+      <title>MERN Starter</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    <body>
+      <div id="app" style="height: 100%">${html}</div>
+      <script>
+        window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
+      </script>
+      <script type="text/javascript" src="bundle.js"></script>
+    </body>
+  </html>
+  `
+)
+
 const handleRender = (req, res, next) => {
+  // eslint-disable-next-line consistent-return
   match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
     if (err) {
       return res.status(500)
@@ -31,8 +54,8 @@ const handleRender = (req, res, next) => {
     }
 
     global.navigator = {
-      userAgent: req.headers['user-agent']
-    };
+      userAgent: req.headers['user-agent'],
+    }
 
     const initialState = {}
     const store = createStore(initialState)
@@ -40,7 +63,7 @@ const handleRender = (req, res, next) => {
     const html = renderToString(
       <Provider store={store}>
         <RouterContext {...renderProps} />
-      </Provider>
+      </Provider> // eslint-disable-line comma-dangle
     )
 
     const preloadedState = store.getState()
@@ -49,45 +72,23 @@ const handleRender = (req, res, next) => {
   })
 }
 
-const renderFullPage = (html, preloadedState) => {
-  return `
-    <!doctype html>
-    <html lang="en">
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="mobile-web-app-capable" content="yes">
-        <title>MERN Starter</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      </head>
-      <body>
-        <div id="app" style="height: 100%">${html}</div>
-        <script>
-          window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
-        </script>
-        <script type="text/javascript" src="bundle.js"></script>
-      </body>
-    </html>
-  `
-}
-
 app.use(express.static('dist'))
 
 const compiler = webpack(webpackConfig)
 
 app.use(webpackDevMiddleware(compiler, {
   noInfo: true,
-  publicPath: webpackConfig.output.publicPath
+  publicPath: webpackConfig.output.publicPath,
 }))
 
 app.use(webpackHotMiddleware(compiler, {
   log: console.log,
   path: '/__webpack_hmr',
-  heartbeat: 10000
+  heartbeat: 10000,
 }))
 
 app.use(handleRender)
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}.`)
-});
+})

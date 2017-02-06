@@ -1,0 +1,38 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "plugins": [
+    "react",
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "semi": [
+      2, "never"
+    ],
+    "no-console": [
+      2,
+      {
+        "allow": ["log"]
+      }
+    ],
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "react/forbid-prop-types": [
+      2,
+      {
+        "forbid": [
+          "any",
+          "array"
+        ]
+      }
+    ]
+  }
+}
