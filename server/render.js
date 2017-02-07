@@ -4,7 +4,7 @@ import { match, RouterContext } from 'react-router'
 
 import createStore from '../app/store/createStore'
 import routes from '../app/routes'
-import App from '../app/containers/App'
+import RootContainer from '../app/containers/RootContainer'
 
 const renderFullPage = (html, css, preloadedState) => (
   `
@@ -19,7 +19,7 @@ const renderFullPage = (html, css, preloadedState) => (
       <style type="text/css">${[...css].join('')}</style>
     </head>
     <body>
-      <div id="app" style="height: 100%">${html}</div>
+      <div id="root" style="height: 100%">${html}</div>
       <script>
         window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
       </script>
@@ -61,9 +61,9 @@ const handleRender = (req, res, next) => {
     const store = createStore(initialState)
 
     const html = renderToString(
-      <App store={store} context={context}>
+      <RootContainer store={store} context={context}>
         <RouterContext {...renderProps} />
-      </App> // eslint-disable-line comma-dangle
+      </RootContainer> // eslint-disable-line comma-dangle
     )
 
     const preloadedState = store.getState()

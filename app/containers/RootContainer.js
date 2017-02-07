@@ -5,7 +5,7 @@ const ContextType = {
   insertCss: PropTypes.func.isRequired,
 }
 
-class App extends Component {
+class RootContainer extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
     context: PropTypes.shape(ContextType).isRequired,
@@ -27,4 +27,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default RootContainer

@@ -4,7 +4,7 @@ import { browserHistory, Router } from 'react-router'
 import { AppContainer } from 'react-hot-loader' // eslint-disable-line import/no-extraneous-dependencies
 
 import createStore from './store/createStore'
-import App from './containers/App'
+import RootContainer from './containers/RootContainer'
 
 import projectConfig from '../config/project.config'
 
@@ -21,16 +21,16 @@ const store = createStore(initialState)
 
 let routes = require('./routes').default
 
-const MOUNT_NODE = document.getElementById('app')
+const MOUNT_NODE = document.getElementById('root')
 
 const render = () => {
   ReactDOM.render(
     <AppContainer>
-      <App store={store} context={context}>
+      <RootContainer store={store} context={context}>
         <Router history={browserHistory}>
           {routes}
         </Router>
-      </App>
+      </RootContainer>
     </AppContainer>,
     MOUNT_NODE // eslint-disable-line comma-dangle
   )
