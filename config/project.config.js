@@ -10,6 +10,11 @@ const config = {
   dir_server: 'server',
 }
 
+config.globals = {
+  '__DEV__': config.env === 'development',
+  '__PROD__': config.env === 'production',
+}
+
 function base() {
   const args = [config.path_base].concat([].slice.call(arguments))
   return path.resolve.apply(path, args)

@@ -44,10 +44,6 @@ const handleRender = (req, res, next) => {
       return next()
     }
 
-    global.navigator = {
-      userAgent: req.headers['user-agent'],
-    }
-
     const css = new Set()
 
     const context = {

@@ -11,20 +11,18 @@ import handleRender from './render'
 
 const app = express()
 
-if (projectConfig.env === 'development') {
-  const compiler = webpack(webpackAppConfig)
+const compiler = webpack(webpackAppConfig)
 
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    lazy: false,
-    publicPath: webpackAppConfig.output.publicPath,
-  }))
+app.use(webpackDevMiddleware(compiler, {
+  noInfo: true,
+  lazy: false,
+  publicPath: webpackAppConfig.output.publicPath,
+}))
 
-  app.use(webpackHotMiddleware(compiler, {
-    path: '/__webpack_hmr',
-    heartbeat: 10000,
-  }))
-}
+app.use(webpackHotMiddleware(compiler, {
+  path: '/__webpack_hmr',
+  heartbeat: 10000,
+}))
 
 app.use(express.static(projectConfig.dir_dist))
 app.use(handleRender)
