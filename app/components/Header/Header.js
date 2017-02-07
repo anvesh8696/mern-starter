@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { IndexLink, Link } from 'react-router'
 
 export default () => (
   <nav className="navbar navbar-default">
@@ -11,7 +11,7 @@ export default () => (
           <span className="icon-bar" />
           <span className="icon-bar" />
         </button>
-        <Link to="/" className="navbar-brand">MERN Starter</Link>
+        <IndexLink to="/" className="navbar-brand">MERN Starter</IndexLink>
       </div>
       <div className="collapse navbar-collapse" id="top-menu">
         <ul className="nav navbar-nav">

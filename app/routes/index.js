@@ -1,4 +1,4 @@
-import CoreLayout from '../layouts/CoreLayout'
+import CoreLayout from '../components/CoreLayout'
 import Home from './Home'
 import Feature from './Feature'
 import Login from './Login'
