@@ -19,6 +19,7 @@ config.paths = {
   base: base,
   app: base.bind(null, config.dir_app),
   dist: base.bind(null, config.dir_dist),
+  server: base.bind(null, config.dir_server),
 }
 
 module.exports = config

@@ -1,5 +1,7 @@
 const webpack = require('webpack')
+const extend  = require('extend')
 const projectConfig = require('./project.config')
+const baseConfig = require('./webpack.base.config')
 
 let APP_ENTRY = []
 
@@ -10,26 +12,13 @@ if (projectConfig.env === 'development') {
 
 APP_ENTRY.push(projectConfig.paths.app('index.js'))
 
-module.exports = {
+module.exports = extend(true, {}, baseConfig, {
   entry: APP_ENTRY,
   output: {
     filename: 'bundle.js',
-    path: projectConfig.paths.dist(),
-    publicPath: '/'
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: [
-          'babel-loader',
-        ]
-      }
-    ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-  ]
-}
+  ],
+})

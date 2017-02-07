@@ -1,6 +1,7 @@
 import CoreLayout from '../layouts/CoreLayout'
 import Home from './Home'
 import Feature from './Feature'
+import Login from './Login'
 
 export default {
   path: '/',
@@ -10,6 +11,10 @@ export default {
     {
       path: 'features',
       component: Feature,
+    },
+    {
+      path: 'login',
+      component: Login,
     },
   ],
 }

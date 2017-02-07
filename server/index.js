@@ -5,19 +5,19 @@ import webpackDevMiddleware from 'webpack-dev-middleware' // eslint-disable-line
 import webpackHotMiddleware from 'webpack-hot-middleware' // eslint-disable-line import/no-extraneous-dependencies
 
 import projectConfig from '../config/project.config'
-import webpackConfig from '../config/webpack.config'
+import webpackAppConfig from '../config/webpack.app.config'
 
 import handleRender from './render'
 
 const app = express()
 
 if (projectConfig.env === 'development') {
-  const compiler = webpack(webpackConfig)
+  const compiler = webpack(webpackAppConfig)
 
   app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     lazy: false,
-    publicPath: webpackConfig.output.publicPath,
+    publicPath: webpackAppConfig.output.publicPath,
   }))
 
   app.use(webpackHotMiddleware(compiler, {

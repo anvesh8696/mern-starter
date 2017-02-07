@@ -1,12 +1,12 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { Provider } from 'react-redux'
 import { match, RouterContext } from 'react-router'
 
 import createStore from '../app/store/createStore'
 import routes from '../app/routes'
+import App from '../app/containers/App'
 
-const renderFullPage = (html, preloadedState) => (
+const renderFullPage = (html, css, preloadedState) => (
   `
   <!doctype html>
   <html lang="en">
@@ -16,6 +16,7 @@ const renderFullPage = (html, preloadedState) => (
       <meta name="mobile-web-app-capable" content="yes">
       <title>MERN Starter</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <style type="text/css">${[...css].join('')}</style>
     </head>
     <body>
       <div id="app" style="height: 100%">${html}</div>
@@ -47,19 +48,28 @@ const handleRender = (req, res, next) => {
       userAgent: req.headers['user-agent'],
     }
 
+    const css = new Set()
+
+    const context = {
+      insertCss: (...styles) => {
+        // eslint-disable-next-line no-underscore-dangle
+        styles.forEach(style => css.add(style._getCss()))
+      },
+    }
+
     const initialState = {}
     const store = createStore(initialState)
 
     const html = renderToString(
-      <Provider store={store}>
+      <App store={store} context={context}>
         <RouterContext {...renderProps} />
-      </Provider> // eslint-disable-line comma-dangle
+      </App> // eslint-disable-line comma-dangle
     )
 
     const preloadedState = store.getState()
 
-    res.send(renderFullPage(html, preloadedState))
+    res.send(renderFullPage(html, css, preloadedState))
   })
 }
 
-module.exports = handleRender
+export default handleRender

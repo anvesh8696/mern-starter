@@ -1,19 +1,30 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Provider } from 'react-redux'
-import { browserHistory, Router } from 'react-router'
 
-import routes from '../routes'
+const ContextType = {
+  insertCss: PropTypes.func.isRequired,
+}
 
-const App = ({ store }) => (
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      {routes}
-    </Router>
-  </Provider>
-)
+class App extends Component {
+  static propTypes = {
+    store: PropTypes.object.isRequired,
+    context: PropTypes.shape(ContextType).isRequired,
+    children: PropTypes.object.isRequired,
+  }
 
-App.propTypes = {
-  store: PropTypes.object.isRequired,
+  static childContextTypes = ContextType
+
+  getChildContext() {
+    return this.props.context
+  }
+
+  render() {
+    return (
+      <Provider store={this.props.store}>
+        {this.props.children}
+      </Provider>
+    )
+  }
 }
 
 export default App
