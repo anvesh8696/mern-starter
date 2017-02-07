@@ -33,6 +33,10 @@
           "array"
         ]
       }
+    ],
+    "react/jsx-first-prop-new-line": [
+      2,
+      "multiline"
     ]
   }
 }

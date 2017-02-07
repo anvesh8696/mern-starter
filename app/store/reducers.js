@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import locationReducer from './location'
+import user from './user'
 
 export default () => (
   combineReducers({
-    location: locationReducer,
+    user,
   })
 )

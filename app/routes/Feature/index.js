@@ -1,3 +1,6 @@
 import FeatureView from './components/FeatureView'
 
-export default FeatureView
+export default {
+  path: 'features',
+  component: FeatureView,
+}

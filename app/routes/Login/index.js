@@ -1,3 +1,6 @@
-import LoginView from './components/LoginView'
+import LoginContainer from './containers/LoginContainer'
 
-export default LoginView
+export default {
+  path: 'login',
+  component: LoginContainer,
+}

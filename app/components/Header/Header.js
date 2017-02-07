@@ -1,7 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { IndexLink, Link } from 'react-router'
 
-export default () => (
+const Header = ({ user }) => ( // eslint-disable-line react/prop-types
   <nav className="navbar navbar-default">
     <div className="container-fluid">
       <div className="navbar-header">
@@ -19,12 +20,33 @@ export default () => (
             <Link to="/features">Features</Link>
           </li>
         </ul>
-        <ul className="nav navbar-nav navbar-right">
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
+        {
+          user ? (
+            <ul className="nav navbar-nav navbar-right">
+              <li>
+                <Link to="/profile">
+                  Hello {user.username}
+                </Link>
+              </li>
+              <li>
+                <Link to="/logout">Logout</Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="nav navbar-nav navbar-right">
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            </ul>
+          )
+        }
       </div>
     </div>
   </nav>
 )
+
+const mapStateToProps = state => ({
+  user: state.user,
+})
+
+export default connect(mapStateToProps)(Header)
