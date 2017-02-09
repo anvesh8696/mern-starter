@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { browserHistory, Router } from 'react-router'
-import { AppContainer } from 'react-hot-loader' // eslint-disable-line import/no-extraneous-dependencies
 
 import createStore from './store/createStore'
-import RootContainer from './containers/RootContainer'
+import HmrContainer from './containers/HmrContainer'
+import AppContainer from './containers/AppContainer'
 
 import projectConfig from '../config/project.config'
 
@@ -25,13 +25,13 @@ const MOUNT_NODE = document.getElementById('root')
 
 const render = () => {
   ReactDOM.render(
-    <AppContainer>
-      <RootContainer store={store} context={context}>
+    <HmrContainer>
+      <AppContainer store={store} context={context}>
         <Router history={browserHistory}>
           {routes}
         </Router>
-      </RootContainer>
-    </AppContainer>,
+      </AppContainer>
+    </HmrContainer>,
     MOUNT_NODE // eslint-disable-line comma-dangle
   )
 }

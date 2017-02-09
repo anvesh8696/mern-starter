@@ -4,7 +4,7 @@ import { match, RouterContext } from 'react-router'
 
 import createStore from '../../app/store/createStore'
 import routes from '../../app/routes'
-import RootContainer from '../../app/containers/RootContainer'
+import AppContainer from '../../app/containers/AppContainer'
 
 const renderFullPage = (html, css, preloadedState) => (
   `
@@ -57,9 +57,9 @@ const renderApp = (req, res, next) => {
     const store = createStore(initialState)
 
     const html = renderToString(
-      <RootContainer store={store} context={context}>
+      <AppContainer store={store} context={context}>
         <RouterContext {...renderProps} />
-      </RootContainer> // eslint-disable-line comma-dangle
+      </AppContainer> // eslint-disable-line comma-dangle
     )
 
     const preloadedState = store.getState()
