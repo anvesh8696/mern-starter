@@ -29,7 +29,7 @@ const renderFullPage = (html, css, preloadedState) => (
   `
 )
 
-const handleRender = (req, res, next) => {
+const renderApp = (req, res, next) => {
   // eslint-disable-next-line consistent-return
   match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
     if (err) {
@@ -68,4 +68,4 @@ const handleRender = (req, res, next) => {
   })
 }
 
-export default handleRender
+export default renderApp
