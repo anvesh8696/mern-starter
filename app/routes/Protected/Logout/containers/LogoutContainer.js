@@ -1,15 +1,15 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import { logoutUser } from '../../../store/user'
+import { logoutUser } from '../../../../store/user'
 
 class LogoutContainer extends Component {
   static propTypes = {
-    onLogout: PropTypes.func.isRequired,
+    dispatch: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
-    this.props.onLogout()
+    this.props.dispatch(logoutUser())
       .then(() => {
         // Redirect to home page.
         browserHistory.push('/')
@@ -21,12 +21,4 @@ class LogoutContainer extends Component {
   }
 }
 
-const mapStateToProps = () => ({})
-
-const mapDispatchToProps = dispatch => ({
-  onLogout: () => (
-    dispatch(logoutUser())
-  ),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(LogoutContainer)
+export default connect()(LogoutContainer)

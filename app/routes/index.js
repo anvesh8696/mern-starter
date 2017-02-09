@@ -2,8 +2,7 @@ import CoreLayout from '../components/CoreLayout'
 import Home from './Home'
 import Feature from './Feature'
 import Login from './Login'
-import Logout from './Logout'
-import Profile from './Profile'
+import Protected from './Protected'
 
 export default {
   path: '/',
@@ -12,7 +11,6 @@ export default {
   childRoutes: [
     Feature,
     Login,
-    Logout,
-    Profile,
+    Protected,
   ],
 }

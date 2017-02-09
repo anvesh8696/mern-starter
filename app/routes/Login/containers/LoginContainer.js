@@ -6,7 +6,7 @@ import LoginView from '../components/LoginView'
 
 class LoginContainer extends Component {
   static propTypes = {
-    onLogin: PropTypes.func.isRequired,
+    dispatch: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -20,7 +20,7 @@ class LoginContainer extends Component {
   }
 
   handlSubmit(username, password) {
-    this.props.onLogin(username, password)
+    this.props.dispatch(loginUser(username, password))
       .then(() => {
         // Redirect to user profile page.
         browserHistory.push('/profile')
@@ -42,12 +42,4 @@ class LoginContainer extends Component {
   }
 }
 
-const mapStateToProps = () => ({})
-
-const mapDispatchToProps = dispatch => ({
-  onLogin: (username, password) => (
-    dispatch(loginUser(username, password))
-  ),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)
+export default connect()(LoginContainer)
