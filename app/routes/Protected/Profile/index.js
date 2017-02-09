@@ -1,6 +1,7 @@
+import React from 'react'
+import { Route } from 'react-router'
 import ProfileContainer from './containers/ProfileContainer'
 
-export default {
-  path: 'profile',
-  component: ProfileContainer,
-}
+export default (
+  <Route path="profile" component={ProfileContainer} />
+)
