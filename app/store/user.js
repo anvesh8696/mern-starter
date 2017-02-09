@@ -1,14 +1,35 @@
+import { browserHistory } from 'react-router'
+
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 
-export const loginUser = user => ({
-  type: LOGIN_USER,
-  user,
-})
+export const loginUser = (username, password) => (dispatch) => {
+  // TODO: Do some real authentication.
+  if (username !== 'admin' || password !== 'admin') {
+    return
+  }
 
-export const logoutUser = () => ({
-  type: LOGOUT_USER,
-})
+  dispatch({
+    type: LOGIN_USER,
+    user: {
+      username,
+    },
+  })
+
+  // Redirect to user profile page.
+  browserHistory.push('/profile')
+}
+
+export const logoutUser = () => (dispatch) => {
+  // TODO: Do some logout job.
+
+  dispatch({
+    type: LOGOUT_USER,
+  })
+
+  // Redirect to home page.
+  browserHistory.push('/')
+}
 
 const initialState = null
 

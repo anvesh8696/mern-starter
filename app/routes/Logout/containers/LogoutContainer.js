@@ -1,6 +1,5 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
 import { logoutUser } from '../../../store/user'
 
 class LogoutContainer extends Component {
@@ -10,7 +9,6 @@ class LogoutContainer extends Component {
 
   componentWillMount() {
     this.props.onLogout()
-    browserHistory.push('/')
   }
 
   render() {

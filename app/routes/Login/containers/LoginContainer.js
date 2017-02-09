@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
 import { loginUser } from '../../../store/user'
 import LoginView from '../components/LoginView'
 
@@ -15,13 +14,8 @@ class LoginContainer extends Component {
     this.handlSubmit = this.handlSubmit.bind(this)
   }
 
-  handlSubmit(username, password) { // eslint-disable-line no-unused-vars
-    // TODO: Do user authentication.
-    this.props.onLogin({
-      username,
-    })
-
-    browserHistory.push('/profile')
+  handlSubmit(username, password) {
+    this.props.onLogin(username, password)
   }
 
   render() {
@@ -36,8 +30,8 @@ class LoginContainer extends Component {
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => ({
-  onLogin: (user) => {
-    dispatch(loginUser(user))
+  onLogin: (username, password) => {
+    dispatch(loginUser(username, password))
   },
 })
 

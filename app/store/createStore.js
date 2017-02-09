@@ -1,10 +1,12 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import makeRootReducer from './reducers'
 
 export default (initialState = {}) => {
   const store = createStore(
     makeRootReducer(),
-    initialState // eslint-disable-line comma-dangle
+    initialState,
+    applyMiddleware(thunk) // eslint-disable-line comma-dangle
   )
 
   if (module.hot) {
