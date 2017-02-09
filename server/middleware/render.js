@@ -2,9 +2,9 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 
-import createStore from '../app/store/createStore'
-import routes from '../app/routes'
-import RootContainer from '../app/containers/RootContainer'
+import createStore from '../../app/store/createStore'
+import routes from '../../app/routes'
+import RootContainer from '../../app/containers/RootContainer'
 
 const renderFullPage = (html, css, preloadedState) => (
   `

@@ -7,7 +7,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware' // eslint-disable-line
 import projectConfig from '../config/project.config'
 import webpackAppConfig from '../config/webpack.app.config'
 
-import handleRender from './render'
+import handleRender from './middleware/render'
 
 const app = express()
 
