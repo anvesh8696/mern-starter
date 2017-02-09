@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import withStyles from 'isomorphic-style-loader/lib/withStyles'
+import FormGroup from './FormGroup'
 import LoginStyle from '../style.scss'
 
 class LoginView extends Component {
@@ -13,76 +14,57 @@ class LoginView extends Component {
     this.state = {
       username: '',
       password: '',
-      touched: {
-        username: false,
-        password: false,
-      },
     }
 
     this.handleChangeUsername = this.handleChangeUsername.bind(this)
     this.handleChangePassword = this.handleChangePassword.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  validate() {
-    const { username, password } = this.state
-    const errors = {}
-
+  validateUsername = (username) => {
     if (!username.length) {
-      errors.username = 'Username is required.'
+      return 'Username is required.'
     }
-
-    if (!password.length) {
-      errors.password = 'Password is required.'
-    }
-
-    if (Object.keys(errors).length) {
-      return errors
-    }
-
     return true
   }
 
-  handleChangeUsername(event) {
+  validatePassword = (password) => {
+    if (!password.length) {
+      return 'Password is required.'
+    }
+    return true
+  }
+
+  handleChangeUsername(username) {
     this.setState({
-      username: event.target.value,
+      username,
     })
   }
 
-  handleChangePassword(event) {
+  handleChangePassword(password) {
     this.setState({
-      password: event.target.value,
+      password,
     })
   }
-
-  handleBlur = field => () => (
-    this.setState({
-      touched: {
-        ...this.state.touched,
-        [field]: true,
-      },
-    })
-  )
 
   handleSubmit(event) {
     event.preventDefault()
-    if (this.validate() !== true) {
+
+    const isUsernameValid = this.validateUsername(this.state.username)
+    const isPasswordValid = this.validatePassword(this.state.password)
+
+    if (isUsernameValid !== true || isPasswordValid !== true) {
       return
     }
 
-    const { onSubmit } = this.props
-
-    onSubmit(this.state.username, this.state.password)
+    const { username, password } = this.state
+    this.props.onSubmit(username, password)
   }
 
   render() {
-    const errors = this.validate()
-    const isSubmitDisabled = errors !== true
-
-    const shouldMarkError = field => (
-      errors[field] ? this.state.touched[field] : false
-    )
+    const isUsernameValid = this.validateUsername(this.state.username)
+    const isPasswordValid = this.validatePassword(this.state.password)
+    const isSubmitDisabled = isUsernameValid !== true || isPasswordValid !== true
 
     return (
       <div className="row">
@@ -93,40 +75,20 @@ class LoginView extends Component {
             </div>
             <div className="panel-body">
               <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="username" className="col-sm-3 control-label">Username</label>
-                  <div className={`col-sm-9 ${shouldMarkError('username') ? 'has-error' : ''}`}>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="username"
-                      placeholder="Username"
-                      value={this.state.username}
-                      onChange={this.handleChangeUsername}
-                      onBlur={this.handleBlur('username')}
-                    />
-                    <p className={`text-danger ${LoginStyle.noMb} ${shouldMarkError('username') ? 'show' : 'hidden'}`}>
-                      {errors.username}
-                    </p>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password" className="col-sm-3 control-label">Password</label>
-                  <div className={`col-sm-9 ${shouldMarkError('password') ? 'has-error' : ''}`}>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="password"
-                      placeholder="Password"
-                      value={this.state.password}
-                      onChange={this.handleChangePassword}
-                      onBlur={this.handleBlur('password')}
-                    />
-                    <p className={`text-danger ${LoginStyle.noMb} ${shouldMarkError('password') ? 'show' : 'hidden'}`}>
-                      {errors.password}
-                    </p>
-                  </div>
-                </div>
+                <FormGroup
+                  type="text"
+                  id="username"
+                  label="Username"
+                  validate={this.validateUsername}
+                  onChange={this.handleChangeUsername}
+                />
+                <FormGroup
+                  type="password"
+                  id="password"
+                  label="Password"
+                  validate={this.validatePassword}
+                  onChange={this.handleChangePassword}
+                />
                 <div className={`form-group ${LoginStyle.noMb}`}>
                   <div className="col-sm-9 col-sm-offset-3">
                     <button type="submit" className="btn btn-default" disabled={isSubmitDisabled}>Login</button>
