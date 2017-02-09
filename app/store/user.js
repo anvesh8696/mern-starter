@@ -1,35 +1,35 @@
-import { browserHistory } from 'react-router'
-
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 
-export const loginUser = (username, password) => (dispatch) => {
-  // TODO: Do some real authentication.
-  if (username !== 'admin' || password !== 'admin') {
-    return
-  }
+export const loginUser = (username, password) => dispatch => (
+  new Promise((resolve, reject) => {
+    // TODO: Do some real authentication.
+    if (username !== 'admin' || password !== 'admin') {
+      reject('Invalid username or password.')
+      return
+    }
 
-  dispatch({
-    type: LOGIN_USER,
-    user: {
-      username,
-    },
+    dispatch({
+      type: LOGIN_USER,
+      user: {
+        username,
+      },
+    })
+
+    resolve()
   })
+)
 
-  // Redirect to user profile page.
-  browserHistory.push('/profile')
-}
+export const logoutUser = () => dispatch => (
+  new Promise((resolve) => {
+    // TODO: Do some logout job.
+    dispatch({
+      type: LOGOUT_USER,
+    })
 
-export const logoutUser = () => (dispatch) => {
-  // TODO: Do some logout job.
-
-  dispatch({
-    type: LOGOUT_USER,
+    resolve()
   })
-
-  // Redirect to home page.
-  browserHistory.push('/')
-}
+)
 
 const initialState = null
 
