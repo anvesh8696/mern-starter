@@ -3,7 +3,6 @@ import hook from 'css-modules-require-hook'
 
 import projectConfig from '../config/project.config'
 import cssModulesConfig from '../config/css-modules.config'
-import renderApp from './middleware/render'
 
 hook(cssModulesConfig)
 
@@ -14,7 +13,7 @@ if (projectConfig.globals.__DEV__) { // eslint-disable-line no-underscore-dangle
 }
 
 app.use(express.static(projectConfig.dir_dist))
-app.use(renderApp)
+app.use(require('./middleware/render').default)
 
 app.listen(projectConfig.port, () => {
   console.log(`Server listening on port ${projectConfig.port}.`)

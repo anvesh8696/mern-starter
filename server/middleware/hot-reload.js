@@ -4,7 +4,7 @@ import webpack from 'webpack' // eslint-disable-line import/no-extraneous-depend
 import webpackDevMiddleware from 'webpack-dev-middleware' // eslint-disable-line import/no-extraneous-dependencies
 import webpackHotMiddleware from 'webpack-hot-middleware' // eslint-disable-line import/no-extraneous-dependencies
 
-import webpackAppConfig from '../../config/webpack.app.config'
+import webpackAppConfig from '../../config/webpack.app.dev.config'
 
 const router = new express.Router()
 

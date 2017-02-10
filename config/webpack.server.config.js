@@ -9,7 +9,6 @@ module.exports = extend(true, {}, baseConfig, {
     ],
   },
   output: {
-    filename: '[name].js',
     libraryTarget: 'commonjs2',
   },
   target: 'node',

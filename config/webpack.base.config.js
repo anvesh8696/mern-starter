@@ -3,7 +3,9 @@ const projectConfig = require('./project.config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
+  devtool: 'source-map',
   output: {
+    filename: '[name].js',
     path: projectConfig.paths.dist(),
     publicPath: '/',
   },
@@ -25,6 +27,8 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('[name].css'),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': projectConfig.globals.__DEV__ ? '"development"' : '"production"',
     }),

@@ -4,7 +4,13 @@
   "description": "Get started with MERN (MongoDB, ExpressJS, React, NodeJS)",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --config config/webpack.server.config.js && babel-node dist/server.js",
+    "prestart": "rm -rf dist && npm run build:server && npm run build:prod",
+    "prestart:dev": "npm run build:dev",
+    "build:prod": "NODE_ENV=production webpack --config config/webpack.app.prod.config.js",
+    "build:dev": "webpack --config config/webpack.app.dev.config.js",
+    "build:server": "NODE_ENV=production webpack --config config/webpack.server.config.js",
+    "start": "NODE_ENV=production node dist/server.js",
+    "start:dev": "babel-node server",
     "test": "npm run eslint:src",
     "eslint:src": "eslint ./app ./server; exit 0"
   },
