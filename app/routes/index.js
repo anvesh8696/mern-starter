@@ -5,6 +5,7 @@ import Home from './Home'
 import Feature from './Feature'
 import Login from './Login'
 import Protected from './Protected'
+import NotFound from './NotFound'
 
 export default (
   <Route path="/" component={CoreLayout}>
@@ -12,5 +13,6 @@ export default (
     {Feature}
     {Login}
     {Protected}
+    {NotFound}
   </Route>
 )
