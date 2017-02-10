@@ -8,14 +8,6 @@ import AppContainer from './containers/AppContainer'
 
 import projectConfig from '../config/project.config'
 
-const context = {
-  insertCss: (...styles) => {
-    // eslint-disable-next-line no-underscore-dangle
-    const removeCss = styles.map(x => x._insertCss())
-    return () => { removeCss.forEach(f => f()) }
-  },
-}
-
 const initialState = window.__INITIAL_STATE__ // eslint-disable-line no-underscore-dangle
 const store = createStore(initialState)
 
@@ -26,7 +18,7 @@ const MOUNT_NODE = document.getElementById('root')
 const render = () => {
   ReactDOM.render(
     <HmrContainer>
-      <AppContainer store={store} context={context}>
+      <AppContainer store={store}>
         <Router history={browserHistory}>
           {routes}
         </Router>
@@ -36,7 +28,7 @@ const render = () => {
   )
 }
 
-if (projectConfig.env === 'development') {
+if (projectConfig.globals.__DEV__) { // eslint-disable-line no-underscore-dangle
   if (module.hot) {
     module.hot.accept('./routes', () => {
       routes = require('./routes').default // eslint-disable-line global-require

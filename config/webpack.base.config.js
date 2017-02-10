@@ -1,4 +1,6 @@
+const webpack = require('webpack')
 const projectConfig = require('./project.config')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   output: {
@@ -14,34 +16,17 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [
-          {
-            loader: 'isomorphic-style-loader',
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              sourceMap: true,
-              modules: true,
-              minimize: false,
-              localIdentname: '[name]-[local]-[hash:base64:5]',
-              discardComments: {
-                removeAll: true,
-              },
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              config: './config/postcss.config.js',
-            },
-          },
-          {
-            loader: 'sass-loader',
-          },
-        ],
+        loader: ExtractTextPlugin.extract([
+          'css-loader?modules&importLoaders=1&sourceMap&localIdentName=[path]-[name]-[local]-[hash:base64:5]',
+          'postcss-loader?config=./config/postcss.config.js',
+          'sass-loader?sourceMap&outputStyle=expanded'])
       },
     ],
   },
+  plugins: [
+    new ExtractTextPlugin('[name].css'),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': projectConfig.globals.__DEV__ ? '"development"' : '"production"',
+    }),
+  ],
 }

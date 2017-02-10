@@ -6,7 +6,7 @@ import createStore from '../../app/store/createStore'
 import routes from '../../app/routes'
 import AppContainer from '../../app/containers/AppContainer'
 
-const renderFullPage = (html, css, preloadedState) => (
+const renderFullPage = (html, preloadedState) => (
   `
   <!doctype html>
   <html lang="en">
@@ -16,14 +16,14 @@ const renderFullPage = (html, css, preloadedState) => (
       <meta name="mobile-web-app-capable" content="yes">
       <title>MERN Starter</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <style type="text/css">${[...css].join('')}</style>
+      <link rel="stylesheet" href="app.css">
     </head>
     <body>
       <div id="root" style="height: 100%">${html}</div>
       <script>
         window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
       </script>
-      <script type="text/javascript" src="bundle.js"></script>
+      <script type="text/javascript" src="app.js"></script>
     </body>
   </html>
   `
@@ -44,27 +44,18 @@ const renderApp = (req, res, next) => {
       return next()
     }
 
-    const css = new Set()
-
-    const context = {
-      insertCss: (...styles) => {
-        // eslint-disable-next-line no-underscore-dangle
-        styles.forEach(style => css.add(style._getCss()))
-      },
-    }
-
     const initialState = {}
     const store = createStore(initialState)
 
     const html = renderToString(
-      <AppContainer store={store} context={context}>
+      <AppContainer store={store}>
         <RouterContext {...renderProps} />
       </AppContainer> // eslint-disable-line comma-dangle
     )
 
     const preloadedState = store.getState()
 
-    res.send(renderFullPage(html, css, preloadedState))
+    res.send(renderFullPage(html, preloadedState))
   })
 }
 

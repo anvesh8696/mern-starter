@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import withStyles from 'isomorphic-style-loader/lib/withStyles'
 import FormGroup from './FormGroup'
-import LoginStyle from '../style.scss'
+import Style from '../style.scss'
 
 class LoginView extends Component {
   static propTypes = {
@@ -90,16 +89,16 @@ class LoginView extends Component {
                   validate={this.validatePassword}
                   onChange={this.handleChangePassword}
                 />
-                <div className={`form-group ${!this.props.error ? LoginStyle.noMb : ''}`}>
+                <div className={`form-group ${!this.props.error ? Style.noMb : ''}`}>
                   <div className="col-sm-9 col-sm-offset-3">
                     <button type="submit" className="btn btn-default" disabled={isSubmitDisabled}>Login</button>
                   </div>
                 </div>
                 {
                   this.props.error &&
-                  <div className={`form-group ${LoginStyle.noMb}`}>
+                  <div className={`form-group ${Style.noMb}`}>
                     <div className="col-sm-9 col-sm-offset-3">
-                      <p className={`text-danger ${LoginStyle.noMb}`}>
+                      <p className={`text-danger ${Style.noMb}`}>
                         {this.props.error}
                       </p>
                     </div>
@@ -114,4 +113,4 @@ class LoginView extends Component {
   }
 }
 
-export default withStyles(LoginStyle)(LoginView)
+export default LoginView

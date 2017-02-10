@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import withStyles from 'isomorphic-style-loader/lib/withStyles'
-import LoginStyle from '../style.scss'
+import Style from '../style.scss'
 
 class FormGroup extends Component {
   static propTypes = {
@@ -60,7 +59,7 @@ class FormGroup extends Component {
           />
           {
             showError &&
-            <p className={`text-danger ${LoginStyle.noMb}`}>
+            <p className={`text-danger ${Style.noMb}`}>
               {error}
             </p>
           }
@@ -70,4 +69,4 @@ class FormGroup extends Component {
   }
 }
 
-export default withStyles(LoginStyle)(FormGroup)
+export default FormGroup

@@ -32,8 +32,9 @@
   ],
   "dependencies": {
     "css-loader": "^0.26.1",
+    "css-modules-require-hook": "^4.0.5",
     "express": "^4.14.1",
-    "isomorphic-style-loader": "^1.1.0",
+    "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "node-sass": "^4.5.0",
     "postcss-loader": "^1.2.2",
     "react": "^15.4.2",

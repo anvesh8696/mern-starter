@@ -7,11 +7,7 @@ const __DEV__ = projectConfig.globals.__DEV__
 const __PROD__ = projectConfig.globals.__PROD__
 
 let APP_ENTRY = []
-let PLUGINS = [
-  new webpack.DefinePlugin({
-    'process.env.NODE_ENV': __DEV__ ? '"development"' : '"production"',
-  })
-]
+let PLUGINS = baseConfig.plugins
 
 if (__DEV__) {
   APP_ENTRY.push(
@@ -42,9 +38,11 @@ if (__DEV__) {
 APP_ENTRY.push(projectConfig.paths.app('index.js'))
 
 module.exports = extend(true, {}, baseConfig, {
-  entry: APP_ENTRY,
+  entry: {
+    app: APP_ENTRY
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
   },
   plugins: PLUGINS,
 })
