@@ -1,6 +1,6 @@
 import express from 'express'
 
-import webpack from 'webpack' // eslint-disable-line import/no-extraneous-dependencies
+import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware' // eslint-disable-line import/no-extraneous-dependencies
 import webpackHotMiddleware from 'webpack-hot-middleware' // eslint-disable-line import/no-extraneous-dependencies
 
