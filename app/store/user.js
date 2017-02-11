@@ -2,6 +2,7 @@ import 'whatwg-fetch'
 
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
 export const loginUser = (username, password) => dispatch => (
   new Promise((resolve, reject) => {
@@ -16,7 +17,7 @@ export const loginUser = (username, password) => dispatch => (
       },
       credentials: 'same-origin',
     }).then((response) => {
-      if (response.status === 401) {
+      if (response.status !== 200) {
         response.json().then((json) => {
           let message = json.message
           if (Array.isArray(message)) {
@@ -46,6 +47,38 @@ export const logoutUser = () => dispatch => (
     }).then(() => {
       dispatch({
         type: LOGOUT_USER,
+      })
+
+      resolve()
+    })
+  })
+)
+
+export const changePassword = password => dispatch => (
+  new Promise((resolve, reject) => {
+    fetch('/api/profile/password', {
+      method: 'POST',
+      body: JSON.stringify({
+        password,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin',
+    }).then((response) => {
+      if (response.status !== 200) {
+        response.json().then((json) => {
+          let message = json.message
+          if (Array.isArray(message)) {
+            message = message.join()
+          }
+          reject(message)
+        })
+        return
+      }
+
+      dispatch({
+        type: CHANGE_PASSWORD,
       })
 
       resolve()

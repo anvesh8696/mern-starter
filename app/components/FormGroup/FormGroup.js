@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import Style from '../style.scss'
+import Style from './style.scss'
 
 class FormGroup extends Component {
   static propTypes = {

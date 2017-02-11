@@ -36,3 +36,11 @@ passport.use(new LocalStrategy((username, password, done) => {
     })
   })
 }))
+
+// eslint-disable-next-line import/prefer-default-export
+export const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+  return res.status(401).end()
+}

@@ -1,5 +1,7 @@
 import passport from 'passport'
 
+import User from '../models/User'
+
 const postLogin = (req, res, next) => {
   req.assert('username', 'Username cannot be blank.').notEmpty()
   req.assert('password', 'Password cannot be blank.').notEmpty()
@@ -25,7 +27,7 @@ const postLogin = (req, res, next) => {
           return next(err)
         }
 
-        return res.status(200).json({ message: 'success' })
+        return res.status(200).end()
       })
     })(req, res, next)
   })
@@ -33,10 +35,38 @@ const postLogin = (req, res, next) => {
 
 const getLogout = (req, res) => {
   req.logout()
-  return res.status(200).json({ message: 'success' })
+  return res.status(200).end()
+}
+
+const postChangePassword = (req, res, next) => {
+  req.assert('password', 'Password cannot be blank.').notEmpty()
+
+  req.getValidationResult().then((result) => { // eslint-disable-line consistent-return
+    if (!result.isEmpty()) {
+      // Return an array of validation error messages.
+      const message = result.useFirstErrorOnly().array().map(error => error.msg)
+      return res.status(400).json({ message })
+    }
+
+    User.findById(req.user.id, (err, user) => { // eslint-disable-line consistent-return
+      if (err) {
+        return next(err)
+      }
+
+      user.password = req.body.password // eslint-disable-line no-param-reassign
+      user.save((err) => { // eslint-disable-line no-shadow
+        if (err) {
+          return next(err)
+        }
+
+        return res.status(200).end()
+      })
+    })
+  })
 }
 
 export default {
   postLogin,
   getLogout,
+  postChangePassword,
 }
