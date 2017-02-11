@@ -6,7 +6,12 @@ import LoginView from '../components/LoginView'
 
 class LoginContainer extends Component {
   static propTypes = {
+    user: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    user: null,
   }
 
   constructor(props) {
@@ -17,6 +22,12 @@ class LoginContainer extends Component {
     }
 
     this.handlSubmit = this.handlSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    if (this.props.user) {
+      browserHistory.push('/profile')
+    }
   }
 
   handlSubmit(username, password) {
@@ -33,6 +44,9 @@ class LoginContainer extends Component {
   }
 
   render() {
+    if (this.props.user) {
+      return false
+    }
     return (
       <LoginView
         error={this.state.error}
@@ -42,4 +56,8 @@ class LoginContainer extends Component {
   }
 }
 
-export default connect()(LoginContainer)
+const mapStateToProps = state => ({
+  user: state.user,
+})
+
+export default connect(mapStateToProps)(LoginContainer)

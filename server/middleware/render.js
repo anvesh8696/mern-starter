@@ -45,6 +45,13 @@ const renderApp = (req, res, next) => {
     }
 
     const initialState = {}
+
+    if (req.isAuthenticated()) {
+      initialState.user = {
+        username: req.user.username,
+      }
+    }
+
     const store = createStore(initialState)
 
     const html = renderToString(

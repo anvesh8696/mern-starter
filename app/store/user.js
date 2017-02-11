@@ -14,6 +14,7 @@ export const loginUser = (username, password) => dispatch => (
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin',
     }).then((response) => {
       if (response.status === 401) {
         response.json().then((json) => {
@@ -40,7 +41,9 @@ export const loginUser = (username, password) => dispatch => (
 
 export const logoutUser = () => dispatch => (
   new Promise((resolve) => {
-    fetch('/api/logout').then(() => {
+    fetch('/api/logout', {
+      credentials: 'same-origin',
+    }).then(() => {
       dispatch({
         type: LOGOUT_USER,
       })
