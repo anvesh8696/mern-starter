@@ -8,6 +8,8 @@ import AppContainer from './containers/AppContainer'
 
 import projectConfig from '../config/project.config'
 
+import './styles/app.scss'
+
 const initialState = window.__INITIAL_STATE__ // eslint-disable-line no-underscore-dangle
 const store = createStore(initialState)
 
