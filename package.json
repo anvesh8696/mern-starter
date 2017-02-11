@@ -10,7 +10,7 @@
     "build:dev": "webpack --config config/webpack.app.dev.config.js",
     "build:server": "NODE_ENV=production webpack --config config/webpack.server.config.js",
     "start": "NODE_ENV=production node dist/server.js",
-    "start:dev": "nodemon server --exec babel-node",
+    "start:dev": "nodemon server --ignore app --exec babel-node",
     "test": "npm run eslint:src",
     "eslint:src": "eslint ./app ./server; exit 0"
   },
