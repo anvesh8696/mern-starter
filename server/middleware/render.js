@@ -2,7 +2,7 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 
-import createStore from '../../app/store/createStore'
+import createStore from '../../app/store'
 import routes from '../../app/routes'
 import AppContainer from '../../app/containers/AppContainer'
 

@@ -1,8 +1,6 @@
 import 'whatwg-fetch'
 
-export const LOGIN_USER = 'LOGIN_USER'
-export const LOGOUT_USER = 'LOGOUT_USER'
-export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
+import * as types from './types'
 
 export const loginUser = (username, password) => dispatch => (
   new Promise((resolve, reject) => {
@@ -29,7 +27,7 @@ export const loginUser = (username, password) => dispatch => (
       }
 
       dispatch({
-        type: LOGIN_USER,
+        type: types.LOGIN_USER,
         user: {
           username,
         },
@@ -46,7 +44,7 @@ export const logoutUser = () => dispatch => (
       credentials: 'same-origin',
     }).then(() => {
       dispatch({
-        type: LOGOUT_USER,
+        type: types.LOGOUT_USER,
       })
 
       resolve()
@@ -78,23 +76,10 @@ export const changePassword = password => dispatch => (
       }
 
       dispatch({
-        type: CHANGE_PASSWORD,
+        type: types.CHANGE_PASSWORD,
       })
 
       resolve()
     })
   })
 )
-
-const initialState = null
-
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case LOGIN_USER:
-      return action.user
-    case LOGOUT_USER:
-      return initialState
-    default:
-      return state
-  }
-}

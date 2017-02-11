@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { browserHistory, Router } from 'react-router'
 
-import createStore from './store/createStore'
+import createStore from './store'
 import HmrContainer from './containers/HmrContainer'
 import AppContainer from './containers/AppContainer'
 
