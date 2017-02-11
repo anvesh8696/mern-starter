@@ -2,9 +2,14 @@ import express from 'express'
 import session from 'express-session'
 import mongoose from 'mongoose'
 import connectMongo from 'connect-mongo'
+import passport from 'passport'
+import bodyParser from 'body-parser'
+import expressValidator from 'express-validator'
 
 import projectConfig from '../config/project.config'
 import serverConfig from './config/server'
+import './middleware/passport'
+import routes from './routes'
 
 // Create a server.
 const app = express()
@@ -23,6 +28,9 @@ mongoose.connection.on('error', () => {
 // Configure the server.
 app.set('port', projectConfig.port)
 
+app.use(bodyParser.json())
+app.use(expressValidator())
+
 // Configure the session
 const MongoStore = connectMongo(session)
 
@@ -36,6 +44,14 @@ app.use(session({
   }),
 }))
 
+// Configure the passport middleware.
+app.use(passport.initialize())
+app.use(passport.session())
+
+// For backend API.
+app.use('/api', routes)
+
+// Webpack hot loader.
 if (projectConfig.globals.__DEV__) { // eslint-disable-line no-underscore-dangle
   app.use(require('./middleware/hot-reload').default) // eslint-disable-line global-require
 }
