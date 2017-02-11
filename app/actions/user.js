@@ -1,19 +1,11 @@
-import 'whatwg-fetch'
-
 import * as types from './types'
+import { fetchGet, fetchPost } from './helpers'
 
 export const loginUser = (username, password) => dispatch => (
   new Promise((resolve, reject) => {
-    fetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'same-origin',
+    fetchPost('/login', {
+      username,
+      password,
     }).then((response) => {
       if (response.status !== 200) {
         response.json().then((json) => {
@@ -40,9 +32,7 @@ export const loginUser = (username, password) => dispatch => (
 
 export const logoutUser = () => dispatch => (
   new Promise((resolve) => {
-    fetch('/api/logout', {
-      credentials: 'same-origin',
-    }).then(() => {
+    fetchGet('/logout').then(() => {
       dispatch({
         type: types.LOGOUT_USER,
       })
@@ -54,15 +44,8 @@ export const logoutUser = () => dispatch => (
 
 export const changePassword = password => dispatch => (
   new Promise((resolve, reject) => {
-    fetch('/api/profile/password', {
-      method: 'POST',
-      body: JSON.stringify({
-        password,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'same-origin',
+    fetchPost('/profile/password', {
+      password,
     }).then((response) => {
       if (response.status !== 200) {
         response.json().then((json) => {
