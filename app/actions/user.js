@@ -1,5 +1,6 @@
 import * as types from './types'
 import { fetchGet, fetchPost } from './helpers'
+import { showMessage } from './message'
 
 export const loginUser = (username, password) => dispatch => (
   new Promise((resolve, reject) => {
@@ -58,9 +59,7 @@ export const changePassword = password => dispatch => (
         return
       }
 
-      dispatch({
-        type: types.CHANGE_PASSWORD,
-      })
+      dispatch(showMessage('Password is updated successfully.'))
 
       resolve()
     })
