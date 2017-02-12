@@ -14,13 +14,13 @@ describe('<Header />', () => {
     expect(wrapper.find({ to: '/login' }).length).toBe(1)
   })
 
-  it('should render logout link for logged in users', () => {
+  it('should not render login link for logged in users', () => {
     const store = mockStore({
       user: {
         username: 'username',
       },
     })
     const wrapper = shallow(<Header store={store} />).shallow()
-    expect(wrapper.find({ to: '/logout' }).length).toBe(1)
+    expect(wrapper.find({ to: '/login' }).length).toBe(0)
   })
 })
