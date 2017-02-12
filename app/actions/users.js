@@ -60,8 +60,9 @@ export const changePassword = password => dispatch => (
       }
 
       dispatch(showMessage('Password is updated successfully.'))
-
-      resolve()
+        .then(() => {
+          resolve()
+        })
     })
   })
 )
