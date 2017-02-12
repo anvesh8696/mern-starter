@@ -4,7 +4,6 @@ import CoreLayout from 'App/components/CoreLayout'
 import Home from './Home'
 import Feature from './Feature'
 import Login from './Login'
-import Logout from './Logout'
 import Profile from './Profile'
 import NotFound from './NotFound'
 
@@ -35,7 +34,6 @@ export default (store) => {
       <Route path="features" component={Feature} />
       <Route path="login" component={Login} onEnter={requireGuest} />
       <Route onEnter={requireAuth}>
-        <Route path="logout" component={Logout} />
         <Route path="profile" component={Profile} />
       </Route>
       <Route path="*" component={NotFound} />
