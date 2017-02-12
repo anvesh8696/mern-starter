@@ -4,15 +4,41 @@ import CoreLayout from '../components/CoreLayout'
 import Home from './Home'
 import Feature from './Feature'
 import Login from './Login'
-import Protected from './Protected'
+import Logout from './Logout'
+import Profile from './Profile'
 import NotFound from './NotFound'
 
-export default (
-  <Route path="/" component={CoreLayout}>
-    <IndexRoute component={Home} />
-    {Feature}
-    {Login}
-    {Protected}
-    {NotFound}
-  </Route>
-)
+export default (store) => {
+  const requireGuest = (nextState, replace, callback) => {
+    const { user } = store.getState()
+    if (user) {
+      replace({
+        pathname: '/profile',
+      })
+    }
+    callback()
+  }
+
+  const requireAuth = (nextState, replace, callback) => {
+    const { user } = store.getState()
+    if (!user) {
+      replace({
+        pathname: '/login',
+      })
+    }
+    callback()
+  }
+
+  return (
+    <Route path="/" component={CoreLayout}>
+      <IndexRoute component={Home} />
+      <Route path="features" component={Feature} />
+      <Route path="login" component={Login} onEnter={requireGuest} />
+      <Route onEnter={requireAuth}>
+        <Route path="logout" component={Logout} />
+        <Route path="profile" component={Profile} />
+      </Route>
+      <Route path="*" component={NotFound} />
+    </Route>
+  )
+}

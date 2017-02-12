@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 
 import createStore from '../../app/store'
-import routes from '../../app/routes'
+import createRoutes from '../../app/routes'
 import AppContainer from '../../app/containers/AppContainer'
 
 const renderFullPage = (html, preloadedState) => (
@@ -30,6 +30,18 @@ const renderFullPage = (html, preloadedState) => (
 )
 
 const renderApp = (req, res, next) => {
+  const initialState = {}
+
+  if (req.isAuthenticated()) {
+    initialState.user = {
+      username: req.user.username,
+    }
+  }
+
+  const store = createStore(initialState)
+
+  const routes = createRoutes(store)
+
   // eslint-disable-next-line consistent-return
   match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
     if (err) {
@@ -43,16 +55,6 @@ const renderApp = (req, res, next) => {
     if (!renderProps) {
       return next()
     }
-
-    const initialState = {}
-
-    if (req.isAuthenticated()) {
-      initialState.user = {
-        username: req.user.username,
-      }
-    }
-
-    const store = createStore(initialState)
 
     const html = renderToString(
       <AppContainer store={store}>
