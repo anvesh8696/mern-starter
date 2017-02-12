@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
 import Header from '../../components/Header'
-import Messages from '../../components/Messages'
+import MessageBox from '../../components/MessageBox'
 
 const CoreLayout = ({ children }) => (
   <div className="container">
     <Header />
-    <Messages />
+    <MessageBox />
     {children}
   </div>
 )
