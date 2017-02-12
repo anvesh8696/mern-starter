@@ -53,6 +53,10 @@ const postChangePassword = (req, res, next) => {
         return next(err)
       }
 
+      if (!user) {
+        return res.status(400).end()
+      }
+
       user.password = req.body.password // eslint-disable-line no-param-reassign
       user.save((err) => { // eslint-disable-line no-shadow
         if (err) {

@@ -11,7 +11,9 @@
     "build:server": "NODE_ENV=production webpack --config config/webpack.server.config.js",
     "start": "NODE_ENV=production node dist/server.js",
     "start:dev": "nodemon server --ignore app --exec babel-node",
-    "test": "npm run eslint:src",
+    "test": "npm run eslint:src && npm run test:unit",
+    "test:unit": "npm run mocha -- 'test/unit/**/*.spec.js'",
+    "mocha": "mocha --opts ./test/config/mocha.opts",
     "eslint:src": "eslint ./app ./server; exit 0"
   },
   "repository": {
@@ -31,7 +33,7 @@
   },
   "homepage": "https://github.com/ming-soon/mern-starter#readme",
   "pre-commit": [
-    "test"
+    "eslint:src"
   ],
   "pre-push": [
     "test"
@@ -71,15 +73,22 @@
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-eslint": "^7.1.1",
+    "babel-polyfill": "^6.22.0",
+    "babel-register": "^6.22.0",
+    "enzyme": "^2.7.1",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
+    "expect": "^1.20.2",
+    "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "pre-commit": "^1.2.2",
     "pre-push": "^0.1.1",
     "react-hot-loader": "^3.0.0-beta.2",
+    "supertest": "^3.0.0",
+    "util": "^0.10.3",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.16.1"
   }
