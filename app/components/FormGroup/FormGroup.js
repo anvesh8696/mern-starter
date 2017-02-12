@@ -3,18 +3,24 @@ import Style from './style.scss'
 
 class FormGroup extends Component {
   static propTypes = {
-    type: PropTypes.string.isRequired,
+    type: PropTypes.string,
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
+    value: PropTypes.string,
     validate: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    type: 'text',
+    value: '',
   }
 
   constructor(props) {
     super(props)
 
     this.state = {
-      value: '',
+      value: props.value,
       touched: false,
     }
 

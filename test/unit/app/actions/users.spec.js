@@ -22,8 +22,8 @@ describe('Users action creators', () => {
       store.dispatch(loginUser(username, 'dummy-password'))
         .then(() => {
           const actionsFired = store.getActions()
-          expect(actionsFired.length).toEqual(1)
-          expect(actionsFired[0].type).toEqual(LOGIN_USER)
+          expect(actionsFired.length).toBe(1)
+          expect(actionsFired[0].type).toBe(LOGIN_USER)
           expect(actionsFired[0].user).toEqual({
             username,
           })
@@ -42,8 +42,8 @@ describe('Users action creators', () => {
       store.dispatch(logoutUser())
         .then(() => {
           const actionsFired = store.getActions()
-          expect(actionsFired.length).toEqual(1)
-          expect(actionsFired[0].type).toEqual(LOGOUT_USER)
+          expect(actionsFired.length).toBe(1)
+          expect(actionsFired[0].type).toBe(LOGOUT_USER)
           done()
         })
     })
@@ -59,10 +59,10 @@ describe('Users action creators', () => {
       store.dispatch(changePassword('dummy-password'))
         .then(() => {
           const actionsFired = store.getActions()
-          expect(actionsFired.length).toEqual(2)
-          expect(actionsFired[0].type).toEqual(SHOW_MESSAGE)
-          expect(actionsFired[1].type).toEqual(HIDE_MESSAGE)
-          expect(actionsFired[0].messageId).toEqual(actionsFired[1].messageId)
+          expect(actionsFired.length).toBe(2)
+          expect(actionsFired[0].type).toBe(SHOW_MESSAGE)
+          expect(actionsFired[1].type).toBe(HIDE_MESSAGE)
+          expect(actionsFired[0].messageId).toBe(actionsFired[1].messageId)
           done()
         })
     })
