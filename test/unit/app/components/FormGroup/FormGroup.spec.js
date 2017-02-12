@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import expect from 'expect'
 
-import FormGroup from '../../../../../app/components/FormGroup'
+import FormGroup from 'App/components/FormGroup'
 
 describe('<FormGroup />', () => {
   let props

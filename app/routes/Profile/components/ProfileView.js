@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import FormGroup from '../../../components/FormGroup'
+import FormGroup from 'App/components/FormGroup'
 
 class ProfileView extends Component {
   static propTypes = {

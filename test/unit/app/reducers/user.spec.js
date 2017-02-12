@@ -1,7 +1,7 @@
 import expect from 'expect'
 
-import { LOGIN_USER, LOGOUT_USER } from '../../../../app/actions/types'
-import reducer from '../../../../app/reducers/user'
+import { LOGIN_USER, LOGOUT_USER } from 'App/actions/types'
+import reducer from 'App/reducers/user'
 
 describe('User reducer', () => {
   const initialState = null

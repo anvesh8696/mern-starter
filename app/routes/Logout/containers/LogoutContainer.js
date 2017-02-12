@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import { logoutUser } from '../../../actions/users'
+import { logoutUser } from 'App/actions/users'
 
 class LogoutContainer extends Component {
   static propTypes = {

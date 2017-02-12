@@ -1,6 +1,6 @@
 const webpack = require('webpack')
-const projectConfig = require('./project.config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const projectConfig = require('./project.config')
 
 module.exports = {
   devtool: 'source-map',
@@ -33,4 +33,11 @@ module.exports = {
       'process.env.NODE_ENV': projectConfig.globals.__DEV__ ? '"development"' : '"production"',
     }),
   ],
+  resolve: {
+    alias: {
+      App: projectConfig.paths.app(),
+      Config: projectConfig.paths.config(),
+      Server: projectConfig.paths.server(),
+    },
+  }
 }

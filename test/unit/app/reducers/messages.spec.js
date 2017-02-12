@@ -1,7 +1,7 @@
 import expect from 'expect'
 
-import { SHOW_MESSAGE, HIDE_MESSAGE } from '../../../../app/actions/types'
-import reducer from '../../../../app/reducers/messages'
+import { SHOW_MESSAGE, HIDE_MESSAGE } from 'App/actions/types'
+import reducer from 'App/reducers/messages'
 
 describe('Messages reducer', () => {
   const initialState = []

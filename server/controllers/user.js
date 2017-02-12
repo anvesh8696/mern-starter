@@ -1,6 +1,6 @@
 import passport from 'passport'
 
-import User from '../models/User'
+import User from 'Server/models/User'
 
 const postLogin = (req, res, next) => {
   req.assert('username', 'Username cannot be blank.').notEmpty()

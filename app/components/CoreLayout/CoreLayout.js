@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import Header from '../../components/Header'
-import MessageBox from '../../components/MessageBox'
+import Header from 'App/components/Header'
+import MessageBox from 'App/components/MessageBox'
 
 const CoreLayout = ({ children }) => (
   <div className="container">

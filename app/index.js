@@ -2,14 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { browserHistory, Router } from 'react-router'
 
-import createStore from './store'
-import createRoutes from './routes'
-import HmrContainer from './containers/HmrContainer'
-import AppContainer from './containers/AppContainer'
+import createStore from 'App/store'
+import createRoutes from 'App/routes'
+import HmrContainer from 'App/containers/HmrContainer'
+import AppContainer from 'App/containers/AppContainer'
 
-import projectConfig from '../config/project.config'
+import projectConfig from 'Config/project.config'
 
-import './styles/app.scss'
+import 'App/styles/app.scss'
 
 const initialState = window.__INITIAL_STATE__ // eslint-disable-line no-underscore-dangle
 const store = createStore(initialState)
@@ -33,8 +33,8 @@ const render = () => {
 
 if (projectConfig.globals.__DEV__) { // eslint-disable-line no-underscore-dangle
   if (module.hot) {
-    module.hot.accept('./routes', () => {
-      routes = require('./routes').default(store) // eslint-disable-line global-require
+    module.hot.accept('App/routes', () => {
+      routes = require('App/routes').default(store) // eslint-disable-line global-require
       render()
     })
   }

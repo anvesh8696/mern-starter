@@ -1,4 +1,4 @@
-import projectConfig from '../../config/project.config'
+import projectConfig from 'Config/project.config'
 
 export default (
   projectConfig.env === 'development'

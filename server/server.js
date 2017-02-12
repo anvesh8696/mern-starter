@@ -6,7 +6,7 @@ import passport from 'passport'
 import bodyParser from 'body-parser'
 import expressValidator from 'express-validator'
 
-import projectConfig from '../config/project.config'
+import projectConfig from 'Config/project.config'
 import serverConfig from './config/server'
 import './middleware/passport'
 import routes from './routes'

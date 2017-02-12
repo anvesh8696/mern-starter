@@ -1,5 +1,5 @@
 import hook from 'css-modules-require-hook'
-import cssModulesConfig from '../config/css-modules.config'
+import cssModulesConfig from 'Config/css-modules.config'
 
 hook(cssModulesConfig)
 

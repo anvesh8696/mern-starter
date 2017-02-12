@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { hideMessage } from '../../actions/messages'
+import { hideMessage } from 'App/actions/messages'
 import Message from './Message'
 
 class MessageBox extends Component {

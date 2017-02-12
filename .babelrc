@@ -5,6 +5,18 @@
     "stage-0"
   ],
   "plugins": [
-    "react-hot-loader/babel"
-  ]
+    [
+      "babel-plugin-webpack-alias",
+      {
+        "config": "config/webpack.base.config.js"
+      }
+    ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    }
+  }
 }

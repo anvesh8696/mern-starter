@@ -3,8 +3,8 @@ import configStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 import expect from 'expect'
 
-import MessageBox from '../../../../../app/components/MessageBox'
-import Message from '../../../../../app/components/MessageBox/Message'
+import MessageBox from 'App/components/MessageBox'
+import Message from 'App/components/MessageBox/Message'
 
 describe('<MessageBox />', () => {
   const mockStore = configStore()

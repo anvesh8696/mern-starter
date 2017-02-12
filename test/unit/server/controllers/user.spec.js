@@ -2,8 +2,8 @@ import request from 'supertest'
 import passport, { Strategy } from 'passport'
 import util from 'util'
 
-import server from '../../../../server/server'
-import User from '../../../../server/models/User'
+import server from 'Server/server'
+import User from 'Server/models/User'
 
 describe('UserController', () => {
   describe('POST /api/login', () => {

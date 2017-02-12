@@ -1,7 +1,7 @@
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 
-import User from '../models/User'
+import User from 'Server/models/User'
 
 passport.serializeUser((user, done) => {
   done(null, user.id)

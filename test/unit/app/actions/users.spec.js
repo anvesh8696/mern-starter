@@ -3,8 +3,8 @@ import configStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
 
-import { LOGIN_USER, LOGOUT_USER, SHOW_MESSAGE, HIDE_MESSAGE } from '../../../../app/actions/types'
-import { loginUser, logoutUser, changePassword } from '../../../../app/actions/users'
+import { LOGIN_USER, LOGOUT_USER, SHOW_MESSAGE, HIDE_MESSAGE } from 'App/actions/types'
+import { loginUser, logoutUser, changePassword } from 'App/actions/users'
 
 describe('Users action creators', () => {
   const middlewares = [thunk]

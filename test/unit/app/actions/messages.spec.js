@@ -2,8 +2,8 @@ import expect from 'expect'
 import configStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { SHOW_MESSAGE, HIDE_MESSAGE } from '../../../../app/actions/types'
-import { showMessage, hideMessage } from '../../../../app/actions/messages'
+import { SHOW_MESSAGE, HIDE_MESSAGE } from 'App/actions/types'
+import { showMessage, hideMessage } from 'App/actions/messages'
 
 describe('Messages action creators', () => {
   const middlewares = [thunk]

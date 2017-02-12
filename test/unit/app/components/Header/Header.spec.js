@@ -3,7 +3,7 @@ import configStore from 'redux-mock-store'
 import { shallow } from 'enzyme'
 import expect from 'expect'
 
-import Header from '../../../../../app/components/Header'
+import Header from 'App/components/Header'
 
 describe('<Header />', () => {
   const mockStore = configStore()
