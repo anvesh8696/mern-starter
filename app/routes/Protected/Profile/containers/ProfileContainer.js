@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { changePassword } from '../../../../actions/user'
+import { changePassword } from '../../../../actions/users'
 import ProfileView from '../components/ProfileView'
 
 class ProfileContainer extends Component {

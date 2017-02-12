@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { hideMessage } from '../../actions/message'
+import { hideMessage } from '../../actions/messages'
 
 class Message extends Component {
   static propTypes = {

@@ -1,6 +1,6 @@
 import * as types from './types'
 import { fetchGet, fetchPost } from './helpers'
-import { showMessage } from './message'
+import { showMessage } from './messages'
 
 export const loginUser = (username, password) => dispatch => (
   new Promise((resolve, reject) => {
