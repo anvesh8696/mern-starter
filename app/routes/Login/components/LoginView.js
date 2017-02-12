@@ -49,13 +49,6 @@ class LoginView extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    const isUsernameValid = this.validateUsername(this.state.username)
-    const isPasswordValid = this.validatePassword(this.state.password)
-
-    if (isUsernameValid !== true || isPasswordValid !== true) {
-      return
-    }
-
     const { username, password } = this.state
     this.props.onSubmit(username, password)
   }

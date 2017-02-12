@@ -49,13 +49,6 @@ class ProfileView extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    const isPasswordValid = this.validatePassword(this.state.password)
-    const isConfirmPasswordValid = this.validateConfirmPassword(this.state.confirmPassword)
-
-    if (isPasswordValid !== true || isConfirmPasswordValid !== true) {
-      return
-    }
-
     this.props.onSubmit(this.state.password)
   }
 
