@@ -58,42 +58,46 @@ class ProfileView extends Component {
     const isSubmitDisabled = isPasswordValid !== true || isConfirmPasswordValid !== true
 
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">Change Password</h3>
-        </div>
-        <div className="panel-body">
-          <form className="form-horizontal" onSubmit={this.handleSubmit}>
-            <FormGroup
-              type="password"
-              id="password"
-              label="Password"
-              validate={this.validatePassword}
-              onChange={this.handleChangePassword}
-            />
-            <FormGroup
-              type="password"
-              id="confirmPassword"
-              label="Confirm Password"
-              validate={this.validateConfirmPassword}
-              onChange={this.handleChangeConfirmPassword}
-            />
-            <div className={`form-group ${!this.props.error ? 'no-margin-bottom' : ''}`}>
-              <div className="col-sm-9 col-sm-offset-3">
-                <button type="submit" className="btn btn-default" disabled={isSubmitDisabled}>Change Password</button>
-              </div>
+      <div className="row">
+        <div className="col-sm-8 col-sm-offset-2">
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <h3 className="panel-title">Change Password</h3>
             </div>
-            {
-              this.props.error &&
-              <div className="form-group no-margin-bottom">
-                <div className="col-sm-9 col-sm-offset-3">
-                  <p className="text-danger no-margin-bottom">
-                    {this.props.error}
-                  </p>
+            <div className="panel-body">
+              <form className="form-horizontal" onSubmit={this.handleSubmit}>
+                <FormGroup
+                  type="password"
+                  id="password"
+                  label="Password"
+                  validate={this.validatePassword}
+                  onChange={this.handleChangePassword}
+                />
+                <FormGroup
+                  type="password"
+                  id="confirmPassword"
+                  label="Confirm Password"
+                  validate={this.validateConfirmPassword}
+                  onChange={this.handleChangeConfirmPassword}
+                />
+                <div className={`form-group ${!this.props.error ? 'no-margin-bottom' : ''}`}>
+                  <div className="col-sm-9 col-sm-offset-3">
+                    <button type="submit" className="btn btn-default" disabled={isSubmitDisabled}>Change Password</button>
+                  </div>
                 </div>
-              </div>
-            }
-          </form>
+                {
+                  this.props.error &&
+                  <div className="form-group no-margin-bottom">
+                    <div className="col-sm-9 col-sm-offset-3">
+                      <p className="text-danger no-margin-bottom">
+                        {this.props.error}
+                      </p>
+                    </div>
+                  </div>
+                }
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     )
