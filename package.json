@@ -4,8 +4,9 @@
   "description": "Get started with MERN (MongoDB, ExpressJS, React, NodeJS)",
   "main": "index.js",
   "scripts": {
-    "prestart": "rm -rf dist && npm run build:server && npm run build:prod",
+    "prestart": "rm -rf dist && npm run build",
     "prestart:dev": "npm run build:dev",
+    "build": "npm run build:server && npm run build:prod",
     "build:prod": "NODE_ENV=production webpack --config config/webpack.app.prod.config.js",
     "build:dev": "webpack --config config/webpack.app.dev.config.js",
     "build:server": "NODE_ENV=production webpack --config config/webpack.server.config.js",
