@@ -15,7 +15,7 @@
     "test": "npm run eslint:src && npm run test:unit",
     "test:unit": "npm run mocha -- 'test/unit/**/*.spec.js'",
     "mocha": "NODE_ENV=production mocha --opts ./test/config/mocha.opts",
-    "eslint:src": "eslint ./app ./config ./server ./test; exit 0"
+    "eslint:src": "eslint ./app ./config ./server ./test"
   },
   "repository": {
     "type": "git",
