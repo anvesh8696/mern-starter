@@ -1,29 +1,25 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { hideMessage } from 'App/actions/messages'
 import Message from './Message'
 
-class MessageBox extends Component {
-  static propTypes = {
-    messages: PropTypes.arrayOf(PropTypes.object).isRequired,
-    dispatch: PropTypes.func.isRequired,
+const MessageBox = ({ messages, dispatch }) => {
+  const handleDismiss = (messageId) => {
+    dispatch(hideMessage(messageId))
   }
 
-  handleDismiss = (messageId) => {
-    this.props.dispatch(hideMessage(messageId))
-  }
+  return (
+    <div>
+      {messages.map(message => (
+        <Message key={message.messageId} message={message} onDismiss={handleDismiss} />
+      ))}
+    </div>
+  )
+}
 
-  render() {
-    const { messages } = this.props
-
-    return (
-      <div>
-        {messages.map(message => (
-          <Message key={message.messageId} message={message} onDismiss={this.handleDismiss} />
-        ))}
-      </div>
-    )
-  }
+MessageBox.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
