@@ -1,4 +1,6 @@
 # mern-starter
+[![Build Status](https://travis-ci.org/ming-soon/mern-starter.svg?branch=master)](https://travis-ci.org/ming-soon/mern-starter)
+
 MERN (MongoDB, Express, React, Node)
 
 MERN is your One-Stop solution which makes it easy to build universal apps. It minimizes the setup time and gets you up to speed using proven technologies and best practices.
