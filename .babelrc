@@ -10,13 +10,7 @@
       {
         "config": "config/webpack.base.config.js"
       }
-    ]
-  ],
-  "env": {
-    "development": {
-      "plugins": [
-        "react-hot-loader/babel"
-      ]
-    }
-  }
+    ],
+    "react-hot-loader/babel"
+  ]
 }
