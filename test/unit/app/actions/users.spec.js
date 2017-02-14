@@ -3,8 +3,8 @@ import configStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
 
-import { LOGIN_USER, LOGOUT_USER, SHOW_MESSAGE, HIDE_MESSAGE } from 'App/actions/types'
-import { loginUser, logoutUser, changePassword } from 'App/actions/users'
+import { LOGIN_USER, LOGOUT_USER } from 'App/actions/types'
+import { loginUser, logoutUser } from 'App/actions/users'
 
 describe('Users action creators', () => {
   const middlewares = [thunk]
@@ -50,7 +50,8 @@ describe('Users action creators', () => {
   })
 
   describe('changePassword', () => {
-    it('should dispatch SHOW_MESSAGE and HIDE_MESSAGE', (done) => {
+    // TODO: Possibly duplicate of test case in messages.spec.js.
+    /* it('should dispatch SHOW_MESSAGE and HIDE_MESSAGE', (done) => {
       fetchMock.post('/api/profile/password', {
         status: 200,
       })
@@ -65,6 +66,6 @@ describe('Users action creators', () => {
           expect(actionsFired[0].messageId).toBe(actionsFired[1].messageId)
           done()
         })
-    })
+    }) */
   })
 })
