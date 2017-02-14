@@ -41,7 +41,7 @@ npm run start
 
 ## File Structure
 ### Webpack Configs
-MERN users Webpack for bundling modules. There are four types of Webpack configs provided `webpack.base.config.js` (for base configuration), `webpack.app.dev.config.js` (for development), `webpack.app.prod.config.js` (for production), `webpack.config.server.js` (for bundling server in production).
+MERN users Webpack for bundling modules. There are three types of Webpack configs provided `webpack.base.config.js` (for base configuration), `webpack.app.config.js` (for bundling app), , `webpack.config.server.js` (for bundling server in production).
 
 Webpack is configured to make use of `resolve.alias`, which lets you create aliases to `import` or `require` certain modules more easily.
 

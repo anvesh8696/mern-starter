@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "rm -rf dist && npm run build",
     "build": "npm run build:server && npm run build:prod",
-    "build:prod": "NODE_ENV=production webpack --config config/webpack.app.prod.config.js",
+    "build:prod": "NODE_ENV=production webpack --config config/webpack.app.config.js",
     "build:server": "NODE_ENV=production webpack --config config/webpack.server.config.js",
     "start": "NODE_ENV=production node dist/server.js",
     "start:dev": "NODE_ENV=development nodemon server --ignore app --exec babel-node",
