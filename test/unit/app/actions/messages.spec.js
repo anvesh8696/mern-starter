@@ -12,7 +12,8 @@ describe('Messages action creators', () => {
   describe('showMessage', () => {
     it('should dispatch SHOW_MESSAGE and HIDE_MESSAGE', (done) => {
       const store = mockStore()
-      store.dispatch(showMessage('message'))
+      // Set timeout to 0 to dispatch HIDE_MESSAGE immediately.
+      store.dispatch(showMessage('message', 0))
         .then(() => {
           const actionsFired = store.getActions()
           expect(actionsFired.length).toBe(2)

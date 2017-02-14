@@ -2,7 +2,7 @@ import * as types from './types'
 
 let globalMessageId = 0
 
-export const showMessage = message => dispatch => (
+export const showMessage = (message, timeout = 3000) => dispatch => (
   new Promise((resolve) => {
     globalMessageId += 1
 
@@ -17,7 +17,7 @@ export const showMessage = message => dispatch => (
     setTimeout(() => {
       dispatch(hideMessage(messageId)) // eslint-disable-line no-use-before-define
       resolve()
-    }, 3000)
+    }, timeout)
   })
 )
 
