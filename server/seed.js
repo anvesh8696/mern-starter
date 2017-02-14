@@ -1,4 +1,4 @@
-import User from './models/User'
+import User, { USER_TYPE_ADMIN } from './models/User'
 import serverConfig from './config/server'
 
 export default () => {
@@ -14,6 +14,7 @@ export default () => {
       const user = new User({
         username: serverConfig.DEFAULT_USER.username,
         password: serverConfig.DEFAULT_USER.password,
+        type: USER_TYPE_ADMIN,
       })
       user.save()
     }

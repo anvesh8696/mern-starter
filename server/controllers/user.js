@@ -1,10 +1,26 @@
-import passport from 'passport'
+import User, { USER_TYPES } from 'Server/models/User'
 
-import User from 'Server/models/User'
+const getUsers = (req, res, next) => {
+  User
+    .find({
+      _id: {
+        $ne: req.user._id, // eslint-disable-line no-underscore-dangle
+      },
+    })
+    .select('_id username type createdAt')
+    .exec((err, users) => {
+      if (err) {
+        return next(err)
+      }
 
-const postLogin = (req, res, next) => {
+      return res.status(200).json(users)
+    })
+}
+
+const postUser = (req, res, next) => {
   req.assert('username', 'Username cannot be blank.').notEmpty()
   req.assert('password', 'Password cannot be blank.').notEmpty()
+  req.assert('type', 'Type is invalid.').isIn(USER_TYPES)
 
   req.getValidationResult().then((result) => { // eslint-disable-line consistent-return
     if (!result.isEmpty()) {
@@ -13,64 +29,107 @@ const postLogin = (req, res, next) => {
       return res.status(400).json({ message })
     }
 
-    passport.authenticate('local', (err, user, info) => { // eslint-disable-line consistent-return
+    // eslint-disable-next-line consistent-return
+    User.findOne({ username: req.body.username }, (err, existingUser) => {
       if (err) {
         return next(err)
       }
 
-      if (!user) {
-        return res.status(401).json(info)
+      if (existingUser) {
+        return res.status(400).json({
+          message: 'Username already exists.',
+        })
       }
 
-      req.logIn(user, (err) => { // eslint-disable-line no-shadow
-        if (err) {
-          return next(err)
-        }
-
-        return res.status(200).end()
+      const user = new User({
+        username: req.body.username,
+        password: req.body.password,
+        type: req.body.type,
       })
-    })(req, res, next)
-  })
-}
-
-const getLogout = (req, res) => {
-  req.logout()
-  return res.status(200).end()
-}
-
-const postChangePassword = (req, res, next) => {
-  req.assert('password', 'Password cannot be blank.').notEmpty()
-
-  req.getValidationResult().then((result) => { // eslint-disable-line consistent-return
-    if (!result.isEmpty()) {
-      // Return an array of validation error messages.
-      const message = result.useFirstErrorOnly().array().map(error => error.msg)
-      return res.status(400).json({ message })
-    }
-
-    User.findById(req.user.id, (err, user) => { // eslint-disable-line consistent-return
-      if (err) {
-        return next(err)
-      }
-
-      if (!user) {
-        return res.status(400).end()
-      }
-
-      user.password = req.body.password // eslint-disable-line no-param-reassign
       user.save((err) => { // eslint-disable-line no-shadow
         if (err) {
           return next(err)
         }
 
-        return res.status(200).end()
+        return res.status(200).json({
+          _id: user._id, // eslint-disable-line no-underscore-dangle
+          username: user.username,
+          type: user.type,
+          createdAt: user.createdAt,
+        })
       })
     })
   })
 }
 
+const getUser = (req, res, next) => {
+  User.findById(req.params.id, (err, user) => {
+    if (err) {
+      return next(err)
+    }
+
+    if (!user) {
+      return res.status(400).end()
+    }
+
+    return res.status(200).json({
+      _id: user._id, // eslint-disable-line no-underscore-dangle
+      username: user.username,
+      type: user.type,
+      createdAt: user.createdAt,
+    })
+  })
+}
+
+const putUser = (req, res, next) => {
+  req.assert('password', 'Password cannot be blank.').notEmpty()
+  req.assert('type', 'Type is invalid.').isIn(USER_TYPES)
+
+  req.getValidationResult().then((result) => { // eslint-disable-line consistent-return
+    if (!result.isEmpty()) {
+      // Return an array of validation error messages.
+      const message = result.useFirstErrorOnly().array().map(error => error.msg)
+      return res.status(400).json({ message })
+    }
+
+    const query = { _id: req.params.id }
+    const payload = {
+      password: req.body.password,
+      type: req.body.type,
+    }
+    const options = {
+      new: true, // Return the modified document.
+    }
+
+    User.findOneAndUpdate(query, payload, options, (err, user) => {
+      if (err) {
+        return next(err)
+      }
+
+      return res.status(200).json({
+        _id: user._id, // eslint-disable-line no-underscore-dangle
+        username: user.username,
+        type: user.type,
+        createdAt: user.createdAt,
+      })
+    })
+  })
+}
+
+const deleteUser = (req, res, next) => {
+  User.remove({ _id: req.params.id }, (err) => {
+    if (err) {
+      return next(err)
+    }
+
+    return res.status(200).end()
+  })
+}
+
 export default {
-  postLogin,
-  getLogout,
-  postChangePassword,
+  getUsers,
+  postUser,
+  getUser,
+  putUser,
+  deleteUser,
 }

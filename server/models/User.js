@@ -1,12 +1,25 @@
 import bcrypt from 'bcrypt-nodejs'
 import mongoose from 'mongoose'
 
+export const USER_TYPE_ADMIN = 'ADMIN'
+export const USER_TYPE_USER = 'USER'
+
+export const USER_TYPES = [
+  USER_TYPE_ADMIN,
+  USER_TYPE_USER,
+]
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
   },
   password: String,
+  type: {
+    type: String,
+    enum: USER_TYPES,
+    default: USER_TYPE_USER,
+  },
 }, {
   timestamps: true,
 })
@@ -42,6 +55,13 @@ userSchema.methods.checkPassword = function checkPassword(plain, cb) {
   bcrypt.compare(plain, this.password, (err, isMatch) => {
     cb(err, isMatch)
   })
+}
+
+/**
+ * Helper method to determine if the user is of admin type.
+ */
+userSchema.methods.isAdmin = function isAdmin() {
+  return this.type === USER_TYPE_ADMIN
 }
 
 const User = mongoose.model('User', userSchema)

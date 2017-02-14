@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import connectMongo from 'connect-mongo'
 import passport from 'passport'
 import bodyParser from 'body-parser'
+import methodOverride from 'method-override'
 import expressValidator from 'express-validator'
 
 import projectConfig from 'Config/project.config'
@@ -30,6 +31,8 @@ mongoose.connection.on('error', () => {
 app.set('port', projectConfig.port)
 
 app.use(bodyParser.json())
+
+app.use(methodOverride())
 app.use(expressValidator())
 
 // Configure the session

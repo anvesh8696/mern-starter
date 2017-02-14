@@ -5,7 +5,7 @@ import util from 'util'
 import server from 'Server/server'
 import User from 'Server/models/User'
 
-describe('UserController', () => {
+describe('AuthController', () => {
   describe('POST /api/login', () => {
     before(() => {
       function MockStrategy(verify) {
