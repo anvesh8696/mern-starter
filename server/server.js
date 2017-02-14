@@ -11,6 +11,7 @@ import projectConfig from 'Config/project.config'
 import serverConfig from './config/server'
 import './middleware/passport'
 import routes from './routes'
+import hotReloader from './middleware/hot-reload'
 
 // Connect to database.
 // Connection should be established outside createServer()
@@ -67,7 +68,7 @@ const createServer = (middlewares = []) => {
 
   // Webpack hot loader.
   if (projectConfig.globals.__DEV__) { // eslint-disable-line no-underscore-dangle
-    app.use(require('./middleware/hot-reload').default) // eslint-disable-line global-require
+    app.use(hotReloader)
   }
 
   app.use(express.static(projectConfig.dir_dist))
