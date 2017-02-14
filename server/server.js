@@ -29,6 +29,8 @@ mongoose.connection.on('error', () => {
   process.exit()
 })
 
+const MongoStore = connectMongo(session)
+
 const createServer = (middlewares = []) => {
   // Create a server.
   const app = express()
@@ -42,8 +44,6 @@ const createServer = (middlewares = []) => {
   app.use(expressValidator())
 
   // Configure the session
-  const MongoStore = connectMongo(session)
-
   app.use(session({
     resave: true,
     saveUninitialized: true,
@@ -68,7 +68,7 @@ const createServer = (middlewares = []) => {
 
   // Webpack hot loader.
   if (projectConfig.globals.__DEV__) { // eslint-disable-line no-underscore-dangle
-    app.use(hotReloader)
+    app.use(hotReloader())
   }
 
   app.use(express.static(projectConfig.dir_dist))
