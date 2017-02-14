@@ -2,7 +2,7 @@ import request from 'supertest'
 import passport, { Strategy } from 'passport'
 import util from 'util'
 
-import server from 'Server/server'
+import createServer from 'Server/server'
 import User from 'Server/models/User'
 
 describe('AuthController', () => {
@@ -41,13 +41,13 @@ describe('AuthController', () => {
     })
 
     it('should return 400 Bad Request when parameters are missing', (done) => {
-      request(server)
+      request(createServer())
         .post('/api/login')
         .expect(400, done)
     })
 
     it('should return 401 Unauthorized when credentials are incorrect', (done) => {
-      request(server)
+      request(createServer())
         .post('/api/login')
         .send({
           username: 'admin',
@@ -57,7 +57,7 @@ describe('AuthController', () => {
     })
 
     it('should return 200 OK when credentials are correct', (done) => {
-      request(server)
+      request(createServer())
         .post('/api/login')
         .send({
           username: 'admin',
@@ -69,7 +69,7 @@ describe('AuthController', () => {
 
   describe('GET /api/logout', () => {
     it('should return 200 OK', (done) => {
-      request(server)
+      request(createServer())
         .get('/api/logout')
         .expect(200, done)
     })
@@ -77,7 +77,7 @@ describe('AuthController', () => {
 
   describe('GET /api/profile/password', () => {
     it('should return 401 Unauthorized when an user has not logged in', (done) => {
-      request(server)
+      request(createServer())
         .post('/api/profile/password')
         .expect(401, done)
     })
@@ -88,7 +88,7 @@ describe('AuthController', () => {
         id: 'some-user-id',
       }
 
-      request(server)
+      request(createServer())
         .post('/api/profile/password')
         .expect(400, done)
     })
@@ -107,7 +107,7 @@ describe('AuthController', () => {
         })
       }
 
-      request(server)
+      request(createServer())
         .post('/api/profile/password')
         .send({
           password: 'new-password',

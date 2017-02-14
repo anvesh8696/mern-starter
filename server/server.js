@@ -12,10 +12,11 @@ import serverConfig from './config/server'
 import './middleware/passport'
 import routes from './routes'
 
-// Create a server.
-const app = express()
-
 // Connect to database.
+// Connection should be established outside createServer()
+// to be shared across server instances.
+// Multiple server instances are created only when unit-testing.
+
 // Plugging in native ES6 promises library.
 mongoose.Promise = global.Promise
 mongoose.connect(serverConfig.DB_URI)
@@ -27,40 +28,47 @@ mongoose.connection.on('error', () => {
   process.exit()
 })
 
-// Configure the server.
-app.set('port', projectConfig.port)
+const createServer = () => {
+  // Create a server.
+  const app = express()
 
-app.use(bodyParser.json())
+  // Configure the server.
+  app.set('port', projectConfig.port)
 
-app.use(methodOverride())
-app.use(expressValidator())
+  app.use(bodyParser.json())
 
-// Configure the session
-const MongoStore = connectMongo(session)
+  app.use(methodOverride())
+  app.use(expressValidator())
 
-app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: serverConfig.SESSION_SECRET,
-  store: new MongoStore({
-    url: serverConfig.DB_URI,
-    autoReconnect: true,
-  }),
-}))
+  // Configure the session
+  const MongoStore = connectMongo(session)
 
-// Configure the passport middleware.
-app.use(passport.initialize())
-app.use(passport.session())
+  app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: serverConfig.SESSION_SECRET,
+    store: new MongoStore({
+      url: serverConfig.DB_URI,
+      autoReconnect: true,
+    }),
+  }))
 
-// For backend API.
-app.use('/api', routes)
+  // Configure the passport middleware.
+  app.use(passport.initialize())
+  app.use(passport.session())
 
-// Webpack hot loader.
-if (projectConfig.globals.__DEV__) { // eslint-disable-line no-underscore-dangle
-  app.use(require('./middleware/hot-reload').default) // eslint-disable-line global-require
+  // For backend API.
+  app.use('/api', routes)
+
+  // Webpack hot loader.
+  if (projectConfig.globals.__DEV__) { // eslint-disable-line no-underscore-dangle
+    app.use(require('./middleware/hot-reload').default) // eslint-disable-line global-require
+  }
+
+  app.use(express.static(projectConfig.dir_dist))
+  app.use(require('./middleware/render').default) // eslint-disable-line global-require
+
+  return app
 }
 
-app.use(express.static(projectConfig.dir_dist))
-app.use(require('./middleware/render').default)
-
-export default app
+export default createServer
