@@ -40,14 +40,16 @@ describe('AuthController', () => {
       }))
     })
 
+    const server = createServer()
+
     it('should return 400 Bad Request when parameters are missing', (done) => {
-      request(createServer())
+      request(server)
         .post('/api/login')
         .expect(400, done)
     })
 
     it('should return 401 Unauthorized when credentials are incorrect', (done) => {
-      request(createServer())
+      request(server)
         .post('/api/login')
         .send({
           username: 'admin',
@@ -57,7 +59,7 @@ describe('AuthController', () => {
     })
 
     it('should return 200 OK when credentials are correct', (done) => {
-      request(createServer())
+      request(server)
         .post('/api/login')
         .send({
           username: 'admin',
@@ -83,21 +85,25 @@ describe('AuthController', () => {
     })
 
     it('should return 400 Bad Request when parameters are missing', (done) => {
-      const http = require('http') // eslint-disable-line global-require
-      http.IncomingMessage.prototype.user = {
-        id: 'some-user-id',
-      }
+      const server = createServer([(req, res, next) => {
+        req.user = { // eslint-disable-line no-param-reassign
+          id: 'some-user-id',
+        }
+        next()
+      }])
 
-      request(createServer())
+      request(server)
         .post('/api/profile/password')
         .expect(400, done)
     })
 
     it('should return 200 OK after successful update', (done) => {
-      const http = require('http') // eslint-disable-line global-require
-      http.IncomingMessage.prototype.user = {
-        id: 'some-user-id',
-      }
+      const server = createServer([(req, res, next) => {
+        req.user = { // eslint-disable-line no-param-reassign
+          id: 'some-user-id',
+        }
+        next()
+      }])
 
       User.findById = (id, cb) => {
         cb(null, {
@@ -107,7 +113,7 @@ describe('AuthController', () => {
         })
       }
 
-      request(createServer())
+      request(server)
         .post('/api/profile/password')
         .send({
           password: 'new-password',

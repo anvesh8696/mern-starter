@@ -28,7 +28,7 @@ mongoose.connection.on('error', () => {
   process.exit()
 })
 
-const createServer = () => {
+const createServer = (middlewares = []) => {
   // Create a server.
   const app = express()
 
@@ -56,6 +56,11 @@ const createServer = () => {
   // Configure the passport middleware.
   app.use(passport.initialize())
   app.use(passport.session())
+
+  // Apply middlewares passed as arguments.
+  middlewares.forEach((middleware) => {
+    app.use(middleware)
+  })
 
   // For backend API.
   app.use('/api', routes)
