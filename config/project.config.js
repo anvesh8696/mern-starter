@@ -8,6 +8,7 @@ const config = {
   dir_app: 'app',
   dir_config: 'config',
   dir_dist: 'dist',
+  dir_public: 'public',
   dir_server: 'server',
 }
 
@@ -26,6 +27,7 @@ config.paths = {
   app: base.bind(null, config.dir_app),
   config: base.bind(null, config.dir_config),
   dist: base.bind(null, config.dir_dist),
+  public: base.bind(null, config.dir_public),
   server: base.bind(null, config.dir_server),
 }
 

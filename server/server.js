@@ -15,6 +15,7 @@ import routes from './routes'
 const app = express()
 
 // Connect to database.
+// Plugging in native ES6 promises library.
 mongoose.Promise = global.Promise
 mongoose.connect(serverConfig.DB_URI)
 mongoose.connection.once('open', () => {

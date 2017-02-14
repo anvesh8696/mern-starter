@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import Style from './style.scss'
 
 class FormGroup extends Component {
   static propTypes = {
@@ -65,7 +64,7 @@ class FormGroup extends Component {
           />
           {
             showError &&
-            <p className={`text-danger ${Style.noMb}`}>
+            <p className="text-danger no-margin-bottom">
               {error}
             </p>
           }
