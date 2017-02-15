@@ -36,6 +36,12 @@ describe('<FormGroup />', () => {
     expect(input.prop('value')).toBe(defaultValue)
   })
 
+  it('should render select control when type is selected', () => {
+    const wrapper = shallow(<FormGroup {...props} type="select" />)
+    const select = wrapper.find('select')
+    expect(select.length).toBe(1)
+  })
+
   it('should propagate onChange event', () => {
     const spy = expect.spyOn(props, 'onChange')
 

@@ -1,6 +1,6 @@
 import expect from 'expect'
 
-import { LOAD_USERS } from 'App/actions/types'
+import { LOAD_USERS, ADD_USER } from 'App/actions/types'
 import reducer from 'App/reducers/users'
 
 describe('Users reducer', () => {
@@ -28,5 +28,18 @@ describe('Users reducer', () => {
         users,
       }) // eslint-disable-line comma-dangle
     ).toEqual(users)
+  })
+
+  it('should handle ADD_USER', () => {
+    const user = {
+      username: 'user1',
+    }
+
+    expect(
+      reducer(undefined, {
+        type: ADD_USER,
+        user,
+      }) // eslint-disable-line comma-dangle
+    ).toEqual([user])
   })
 })

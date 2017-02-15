@@ -25,3 +25,10 @@ export const filterUserType = (type) => {
       return ''
   }
 }
+
+export const getAllUserTypes = () => (
+  [USER_TYPE_ADMIN, USER_TYPE_USER].map(type => ({
+    name: filterUserType(type),
+    value: type,
+  }))
+)

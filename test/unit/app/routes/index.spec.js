@@ -144,6 +144,27 @@ describe('Routes', () => {
       })
     })
 
+    describe('Route /users/add', () => {
+      const userLocation = createLocation('/users/add')
+
+      it('should render User.Edit', (done) => {
+        const store = mockStore({
+          user: {
+            username: 'username',
+            isAdmin: true,
+          },
+        })
+        routes = createRoutes(store)
+
+        match({ routes, location: userLocation }, (err, redirectLocation, renderProps) => {
+          expect(renderProps).toExist()
+          expect(renderProps.routes.length).toBe(4)
+          expect(renderProps.routes[3].component).toEqual(User.Edit)
+          done()
+        })
+      })
+    })
+
     describe('Route /users/:id', () => {
       const userLocation = createLocation('/users/some-user-id')
 

@@ -8,7 +8,7 @@ const ListItem = ({ _id, index, username, type, createdAt }) => (
     <td>{username}</td>
     <td>{filterUserType(type)}</td>
     <td>{filterDate(createdAt)}</td>
-    <td>
+    <td className="text-right">
       <Link to={`/users/${_id}`} className="btn btn-info btn-xs">Edit</Link>
     </td>
   </tr>

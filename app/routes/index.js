@@ -48,6 +48,7 @@ export default (store) => {
         <Route path="profile" component={Profile} />
         <Route path="users" onEnter={requireAdmin}>
           <IndexRoute component={User.List} />
+          <Route path="add" component={User.Edit} />
           <Route path=":id" component={User.Edit} />
         </Route>
       </Route>

@@ -6,6 +6,7 @@ class FormGroup extends Component {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.string,
+    options: PropTypes.arrayOf(PropTypes.object),
     validate: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
   }
@@ -13,6 +14,7 @@ class FormGroup extends Component {
   static defaultProps = {
     type: 'text',
     value: '',
+    options: [],
   }
 
   constructor(props) {
@@ -47,21 +49,47 @@ class FormGroup extends Component {
     const error = this.props.validate(this.state.value)
     const showError = error !== true && this.state.touched
 
+    const { id, type } = this.props
+    const { value } = this.state
+
+    let control
+    if (type === 'select') {
+      control = (
+        <select
+          className="form-control"
+          id={id}
+          value={value}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
+        >
+          {
+            this.props.options.map(option => (
+              <option key={option.value} value={option.value}>{option.name}</option>
+            ))
+          }
+        </select>
+      )
+    } else {
+      control = (
+        <input
+          type={type}
+          className="form-control"
+          id={id}
+          placeholder={this.props.label}
+          value={value}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
+        />
+      )
+    }
+
     return (
       <div className="form-group">
-        <label htmlFor={this.props.id} className="col-sm-3 control-label">
+        <label htmlFor={id} className="col-sm-3 control-label">
           {this.props.label}
         </label>
         <div className={`col-sm-9 ${showError ? 'has-error' : ''}`}>
-          <input
-            type={this.props.type}
-            className="form-control"
-            id={this.props.id}
-            placeholder={this.props.label}
-            value={this.state.value}
-            onChange={this.handleChange}
-            onBlur={this.handleBlur}
-          />
+          {control}
           {
             showError &&
             <p className="text-danger no-margin-bottom">

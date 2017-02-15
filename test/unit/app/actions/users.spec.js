@@ -3,8 +3,8 @@ import configStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
 
-import { LOAD_USERS } from 'App/actions/types'
-import { loadUsers } from 'App/actions/users'
+import { LOAD_USERS, ADD_USER } from 'App/actions/types'
+import { loadUsers, addUser } from 'App/actions/users'
 
 describe('Users action creators', () => {
   const middlewares = [thunk]
@@ -31,6 +31,31 @@ describe('Users action creators', () => {
           expect(actionsFired.length).toBe(1)
           expect(actionsFired[0].type).toBe(LOAD_USERS)
           expect(actionsFired[0].users).toEqual(resultsMock)
+          done()
+        })
+    })
+  })
+
+  describe('addUser', () => {
+    it('should dispatch ADD_USER with new user added', (done) => {
+      const user = {
+        username: 'username',
+        password: 'password',
+        type: 'user-type',
+      }
+
+      fetchMock.post('/api/users', {
+        status: 200,
+        body: user,
+      })
+
+      const store = mockStore()
+      store.dispatch(addUser(user))
+        .then(() => {
+          const actionsFired = store.getActions()
+          expect(actionsFired.length).toBe(2)
+          expect(actionsFired[0].type).toBe(ADD_USER)
+          expect(actionsFired[0].user).toEqual(user)
           done()
         })
     })
