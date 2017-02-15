@@ -1,5 +1,5 @@
 import * as types from './types'
-import { fetchGet, fetchPost } from './helpers'
+import { fetchGet, fetchPost, fetchDelete } from './helpers'
 import { showMessage } from './messages'
 
 export const loadUsers = () => dispatch => (
@@ -56,6 +56,21 @@ export const addUser = user => dispatch => (
 
         resolve()
       })
+    })
+  })
+)
+
+export const deleteUser = id => dispatch => (
+  new Promise((resolve) => {
+    fetchDelete(`/users/${id}`).then(() => {
+      dispatch({
+        type: types.DELETE_USER,
+        id,
+      })
+
+      dispatch(showMessage('User is deleted successfully.'))
+
+      resolve()
     })
   })
 )

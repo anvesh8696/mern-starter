@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import ListItem from '../components/ListItem'
 
-const ListTable = ({ users }) => (
+const ListTable = ({ users, onDelete }) => (
   <table className="table table-striped">
     <thead>
       <tr>
@@ -14,10 +14,18 @@ const ListTable = ({ users }) => (
     </thead>
     <tbody>
       {
-        users.map((user, index) => (
-          // eslint-disable-next-line no-underscore-dangle
-          <ListItem key={user._id} index={index + 1} {...user} />
-        ))
+        users.length
+        ? (
+          users.map((user, index) => (
+            // eslint-disable-next-line no-underscore-dangle
+            <ListItem key={user._id} index={index + 1} {...user} onDelete={onDelete} />
+          ))
+        )
+        : (
+          <tr>
+            <td colSpan="5" className="text-muted text-center">There is no user.</td>
+          </tr>
+        )
       }
     </tbody>
   </table>
@@ -25,6 +33,7 @@ const ListTable = ({ users }) => (
 
 ListTable.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default ListTable

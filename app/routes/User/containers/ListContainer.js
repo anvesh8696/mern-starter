@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { loadUsers } from 'App/actions/users'
+import { loadUsers, deleteUser } from 'App/actions/users'
 import ListTable from '../components/ListTable'
 
 class ListContainer extends Component {
@@ -10,8 +10,18 @@ class ListContainer extends Component {
     users: PropTypes.arrayOf(PropTypes.object).isRequired,
   }
 
+  constructor(props) {
+    super(props)
+
+    this.onDelete = this.onDelete.bind(this)
+  }
+
   componentDidMount() {
     this.props.dispatch(loadUsers())
+  }
+
+  onDelete(id) {
+    this.props.dispatch(deleteUser(id))
   }
 
   render() {
@@ -23,7 +33,7 @@ class ListContainer extends Component {
         <div className="clearfix">
           <Link to="users/add" className="btn btn-primary btn-sm pull-right">Add New User</Link>
         </div>
-        <ListTable users={users} />
+        <ListTable users={users} onDelete={this.onDelete} />
       </div>
     )
   }

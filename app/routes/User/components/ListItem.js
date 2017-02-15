@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { filterUserType, filterDate } from 'App/utils'
 
-const ListItem = ({ _id, index, username, type, createdAt }) => (
+const ListItem = ({ _id, index, username, type, createdAt, onDelete }) => (
   <tr>
     <td>{index}</td>
     <td>{username}</td>
@@ -10,6 +10,9 @@ const ListItem = ({ _id, index, username, type, createdAt }) => (
     <td>{filterDate(createdAt)}</td>
     <td className="text-right">
       <Link to={`/users/${_id}`} className="btn btn-info btn-xs">Edit</Link>
+      <button type="button" className="btn btn-danger btn-xs" onClick={() => { onDelete(_id) }}>
+        Delete
+      </button>
     </td>
   </tr>
 )
@@ -20,6 +23,7 @@ ListItem.propTypes = {
   username: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default ListItem

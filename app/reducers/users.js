@@ -11,6 +11,9 @@ export default (state = initialState, action) => {
         ...state,
         action.user,
       ]
+    case types.DELETE_USER:
+    // eslint-disable-next-line no-underscore-dangle
+      return state.filter(user => (user._id !== action.id))
     default:
       return state
   }

@@ -16,3 +16,10 @@ export const fetchPost = (url, payload) => (
     credentials: 'same-origin',
   })
 )
+
+export const fetchDelete = url => (
+  fetch(`/api${url}`, {
+    method: 'DELETE',
+    credentials: 'same-origin',
+  })
+)
