@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
+import { filterUserType, filterDate } from 'App/utils'
 
 const ListItem = ({ _id, index, username, type, createdAt }) => (
   <tr>
     <td>{index}</td>
     <td>{username}</td>
-    <td>{type}</td>
-    <td>{createdAt}</td>
+    <td>{filterUserType(type)}</td>
+    <td>{filterDate(createdAt)}</td>
     <td>
       <Link to={`/users/${_id}`} className="btn btn-info btn-xs">Edit</Link>
     </td>

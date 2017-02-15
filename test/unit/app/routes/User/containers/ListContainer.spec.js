@@ -6,7 +6,7 @@ import expect from 'expect'
 import ListContainer from 'App/routes/User/containers/ListContainer'
 import ListItem from 'App/routes/User/components/ListItem'
 
-import { USER_TYPE_ADMIN, USER_TYPE_USER } from 'Server/models/User'
+import { USER_TYPE_ADMIN, USER_TYPE_USER } from 'Server/constants'
 
 describe('<ListContainer />', () => {
   const mockStore = configStore()

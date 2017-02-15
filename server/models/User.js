@@ -1,13 +1,6 @@
 import bcrypt from 'bcrypt-nodejs'
 import mongoose from 'mongoose'
-
-export const USER_TYPE_ADMIN = 'ADMIN'
-export const USER_TYPE_USER = 'USER'
-
-export const USER_TYPES = [
-  USER_TYPE_ADMIN,
-  USER_TYPE_USER,
-]
+import { USER_TYPE_ADMIN, USER_TYPE_USER, USER_TYPES } from 'Server/constants'
 
 const userSchema = new mongoose.Schema({
   username: {

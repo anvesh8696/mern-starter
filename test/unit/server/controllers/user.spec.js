@@ -2,7 +2,8 @@ import request from 'supertest'
 import expect from 'expect'
 
 import createServer from 'Server/server'
-import User, { USER_TYPE_USER } from 'Server/models/User'
+import User from 'Server/models/User'
+import { USER_TYPE_USER } from 'Server/constants'
 
 describe('UserController', () => {
   describe('GET /api/users', () => {

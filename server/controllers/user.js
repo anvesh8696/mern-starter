@@ -1,4 +1,5 @@
-import User, { USER_TYPES } from 'Server/models/User'
+import User from 'Server/models/User'
+import { USER_TYPES } from 'Server/constants'
 
 const getUsers = (req, res, next) => {
   User

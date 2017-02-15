@@ -1,4 +1,5 @@
-import User, { USER_TYPE_ADMIN } from './models/User'
+import User from './models/User'
+import { USER_TYPE_ADMIN } from './constants'
 import serverConfig from './config/server'
 
 export default () => {
