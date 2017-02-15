@@ -1,21 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import FormGroup from 'App/components/FormGroup'
-import { USER_TYPE_USER } from 'Server/constants'
 import { getAllUserTypes } from 'App/utils'
 
 class EditView extends Component {
   static propTypes = {
-    user: PropTypes.object,
+    isAdding: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired,
     error: PropTypes.string.isRequired,
     onSubmit: PropTypes.func.isRequired,
-  }
-
-  static defaultProps = {
-    user: {
-      username: '',
-      password: '',
-      type: USER_TYPE_USER,
-    },
   }
 
   constructor(props) {
@@ -29,6 +21,12 @@ class EditView extends Component {
     this.handleChangePassword = this.handleChangePassword.bind(this)
     this.handleChangeType = this.handleChangeType.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!Object.is(this.props.user, nextProps.user)) {
+      this.setState({ ...nextProps.user })
+    }
   }
 
   validateUsername = (username) => {
@@ -80,6 +78,8 @@ class EditView extends Component {
   }
 
   render() {
+    const { isAdding } = this.props
+
     const isUsernameValid = this.validateUsername(this.state.username)
     const isPasswordValid = this.validatePassword(this.state.password)
     const isTypeValid = this.validateType(this.state.type)
@@ -94,13 +94,17 @@ class EditView extends Component {
           <div className="panel panel-default">
             <div className="panel-body">
               <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <FormGroup
-                  id="username"
-                  label="Username"
-                  value={this.state.username}
-                  validate={this.validateUsername}
-                  onChange={this.handleChangeUsername}
-                />
+                {
+                  isAdding && (
+                    <FormGroup
+                      id="username"
+                      label="Username"
+                      value={this.state.username}
+                      validate={this.validateUsername}
+                      onChange={this.handleChangeUsername}
+                    />
+                  )
+                }
                 <FormGroup
                   type="password"
                   id="password"

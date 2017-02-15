@@ -29,6 +29,14 @@ class FormGroup extends Component {
     this.handleBlur = this.handleBlur.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.setState({
+        value: nextProps.value,
+      })
+    }
+  }
+
   handleChange(event) {
     const value = event.target.value
 

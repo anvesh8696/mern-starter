@@ -1,5 +1,5 @@
 import * as types from './types'
-import { fetchGet, fetchPost, fetchDelete } from './helpers'
+import { fetchGet, fetchPost, fetchPut, fetchDelete } from './helpers'
 import { showMessage } from './messages'
 
 export const loadUsers = () => dispatch => (
@@ -53,6 +53,38 @@ export const addUser = user => dispatch => (
         })
 
         dispatch(showMessage('User is added successfully.'))
+
+        resolve()
+      })
+    })
+  })
+)
+
+export const updateUser = (id, user) => dispatch => (
+  new Promise((resolve, reject) => {
+    fetchPut(`/users/${id}`, {
+      password: user.password,
+      type: user.type,
+    }).then((response) => {
+      if (response.status !== 200) {
+        response.json().then((json) => {
+          let message = json.message
+          if (Array.isArray(message)) {
+            message = message.join()
+          }
+          reject(message)
+        })
+        return
+      }
+
+      response.json().then((userUpdated) => {
+        dispatch({
+          type: types.UPDATE_USER,
+          id,
+          user: userUpdated,
+        })
+
+        dispatch(showMessage('User is updated successfully.'))
 
         resolve()
       })

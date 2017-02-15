@@ -17,6 +17,17 @@ export const fetchPost = (url, payload) => (
   })
 )
 
+export const fetchPut = (url, payload) => (
+  fetch(`/api${url}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  })
+)
+
 export const fetchDelete = url => (
   fetch(`/api${url}`, {
     method: 'DELETE',

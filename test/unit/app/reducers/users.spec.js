@@ -1,6 +1,6 @@
 import expect from 'expect'
 
-import { LOAD_USERS, ADD_USER, DELETE_USER } from 'App/actions/types'
+import { LOAD_USERS, ADD_USER, UPDATE_USER, DELETE_USER } from 'App/actions/types'
 import reducer from 'App/reducers/users'
 
 describe('Users reducer', () => {
@@ -41,6 +41,34 @@ describe('Users reducer', () => {
         user,
       }) // eslint-disable-line comma-dangle
     ).toEqual([user])
+  })
+
+  it('should handle UPDATE_USER', () => {
+    const userId = 'some-user-id'
+    const user = {
+      _id: userId,
+      username: 'username',
+    }
+
+    expect(
+      reducer(undefined, {
+        type: ADD_USER,
+        user,
+      }) // eslint-disable-line comma-dangle
+    ).toEqual([user])
+
+    const newUsername = 'new-username'
+
+    const state = reducer(undefined, {
+      type: UPDATE_USER,
+      id: userId,
+      user: {
+        username: newUsername,
+      },
+    })
+
+    expect(state.length).toBe(1)
+    expect(state[0].username).toBe(newUsername)
   })
 
   it('should handle DELETE_USER', () => {
