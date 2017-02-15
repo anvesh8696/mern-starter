@@ -7,7 +7,12 @@ import User from 'Server/models/User'
 
 describe('AuthController', () => {
   describe('POST /api/login', () => {
+    let serverInstance
+
     before(() => {
+      const server = createServer()
+      serverInstance = request(server)
+
       function MockStrategy(verify) {
         this.name = 'local'
         this._verify = verify // eslint-disable-line no-underscore-dangle
@@ -34,22 +39,21 @@ describe('AuthController', () => {
         if (username === 'admin' && password === 'password') {
           return done(null, {
             id: 'some-user-id',
+            isAdmin: () => false,
           })
         }
         return done(null, false, { message: 'Invalid username or password.' })
       }))
     })
 
-    const server = createServer()
-
     it('should return 400 Bad Request when parameters are missing', (done) => {
-      request(server)
+      serverInstance
         .post('/api/login')
         .expect(400, done)
     })
 
     it('should return 401 Unauthorized when credentials are incorrect', (done) => {
-      request(server)
+      serverInstance
         .post('/api/login')
         .send({
           username: 'admin',
@@ -59,7 +63,7 @@ describe('AuthController', () => {
     })
 
     it('should return 200 OK when credentials are correct', (done) => {
-      request(server)
+      serverInstance
         .post('/api/login')
         .send({
           username: 'admin',

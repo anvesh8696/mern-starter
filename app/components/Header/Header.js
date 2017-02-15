@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { IndexLink, Link } from 'react-router'
-import { logoutUser } from 'App/actions/users'
+import { logoutUser } from 'App/actions/user'
 
 const Header = ({ user, logoutUser }) => ( // eslint-disable-line no-shadow
   <nav className="navbar navbar-default">
@@ -20,6 +20,12 @@ const Header = ({ user, logoutUser }) => ( // eslint-disable-line no-shadow
           <li>
             <Link to="/features">Features</Link>
           </li>
+          {
+            user && user.isAdmin &&
+            <li>
+              <Link to="/users">Users</Link>
+            </li>
+          }
         </ul>
         {
           user ? (

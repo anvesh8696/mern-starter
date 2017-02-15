@@ -23,4 +23,26 @@ describe('<Header />', () => {
     const wrapper = shallow(<Header store={store} />).shallow()
     expect(wrapper.find({ to: '/login' }).length).toBe(0)
   })
+
+  it('should not render users link for non-admin users', () => {
+    const store = mockStore({
+      user: {
+        username: 'username',
+        isAdmin: false,
+      },
+    })
+    const wrapper = shallow(<Header store={store} />).shallow()
+    expect(wrapper.find({ to: '/users' }).length).toBe(0)
+  })
+
+  it('should render users link for admin users', () => {
+    const store = mockStore({
+      user: {
+        username: 'username',
+        isAdmin: true,
+      },
+    })
+    const wrapper = shallow(<Header store={store} />).shallow()
+    expect(wrapper.find({ to: '/users' }).length).toBe(1)
+  })
 })

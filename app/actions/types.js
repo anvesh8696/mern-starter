@@ -3,3 +3,5 @@ export const LOGOUT_USER = 'LOGOUT_USER'
 
 export const SHOW_MESSAGE = 'SHOW_MESSAGE'
 export const HIDE_MESSAGE = 'HIDE_MESSAGE'
+
+export const LOAD_USERS = 'LOAD_USERS'

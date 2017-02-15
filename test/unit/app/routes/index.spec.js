@@ -8,6 +8,7 @@ import Home from 'App/routes/Home'
 import Feature from 'App/routes/Feature'
 import Login from 'App/routes/Login'
 import Profile from 'App/routes/Profile'
+import User from 'App/routes/User'
 import NotFound from 'App/routes/NotFound'
 
 describe('Routes', () => {
@@ -44,8 +45,10 @@ describe('Routes', () => {
   })
 
   describe('Route /login', () => {
+    const location = createLocation('/login')
+
     it('should render Login', (done) => {
-      match({ routes, location: createLocation('/login') }, (err, redirectLocation, renderProps) => {
+      match({ routes, location }, (err, redirectLocation, renderProps) => {
         expect(renderProps).toExist()
         expect(renderProps.routes.length).toBe(2)
         expect(renderProps.routes[1].component).toEqual(Login)
@@ -61,7 +64,7 @@ describe('Routes', () => {
       })
       routes = createRoutes(store)
 
-      match({ routes, location: createLocation('/login') }, (err, redirectLocation) => {
+      match({ routes, location }, (err, redirectLocation) => {
         expect(redirectLocation).toExist()
         expect(redirectLocation.pathname).toBe('/profile')
         done()
@@ -70,8 +73,10 @@ describe('Routes', () => {
   })
 
   describe('Route /profile', () => {
+    const location = createLocation('/profile')
+
     it('should redirect to /login for guests', (done) => {
-      match({ routes, location: createLocation('/profile') }, (err, redirectLocation) => {
+      match({ routes, location }, (err, redirectLocation) => {
         expect(redirectLocation).toExist()
         expect(redirectLocation.pathname).toBe('/login')
         done()
@@ -86,11 +91,77 @@ describe('Routes', () => {
       })
       routes = createRoutes(store)
 
-      match({ routes, location: createLocation('/profile') }, (err, redirectLocation, renderProps) => {
+      match({ routes, location }, (err, redirectLocation, renderProps) => {
         expect(renderProps).toExist()
         expect(renderProps.routes.length).toBe(3)
         expect(renderProps.routes[2].component).toEqual(Profile)
         done()
+      })
+    })
+  })
+
+  describe('Route /users', () => {
+    const location = createLocation('/users')
+
+    it('should redirect to /login for guests', (done) => {
+      match({ routes, location }, (err, redirectLocation) => {
+        expect(redirectLocation).toExist()
+        expect(redirectLocation.pathname).toBe('/login')
+        done()
+      })
+    })
+
+    it('should redirect to / for non-admin users', (done) => {
+      const store = mockStore({
+        user: {
+          username: 'username',
+          isAdmin: false,
+        },
+      })
+      routes = createRoutes(store)
+
+      match({ routes, location }, (err, redirectLocation) => {
+        expect(redirectLocation).toExist()
+        expect(redirectLocation.pathname).toBe('/')
+        done()
+      })
+    })
+
+    it('should render User.List', (done) => {
+      const store = mockStore({
+        user: {
+          username: 'username',
+          isAdmin: true,
+        },
+      })
+      routes = createRoutes(store)
+
+      match({ routes, location }, (err, redirectLocation, renderProps) => {
+        expect(renderProps).toExist()
+        expect(renderProps.routes.length).toBe(4)
+        expect(renderProps.routes[3].component).toEqual(User.List)
+        done()
+      })
+    })
+
+    describe('Route /users/:id', () => {
+      const userLocation = createLocation('/users/some-user-id')
+
+      it('should render User.List', (done) => {
+        const store = mockStore({
+          user: {
+            username: 'username',
+            isAdmin: true,
+          },
+        })
+        routes = createRoutes(store)
+
+        match({ routes, location: userLocation }, (err, redirectLocation, renderProps) => {
+          expect(renderProps).toExist()
+          expect(renderProps.routes.length).toBe(4)
+          expect(renderProps.routes[3].component).toEqual(User.Edit)
+          done()
+        })
       })
     })
   })

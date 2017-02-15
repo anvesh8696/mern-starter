@@ -1,13 +1,10 @@
 import * as types from './types'
-import { fetchGet, fetchPost } from './helpers'
-import { showMessage } from './messages'
+import { fetchGet } from './helpers'
 
-export const loginUser = (username, password) => dispatch => (
+// eslint-disable-next-line import/prefer-default-export
+export const loadUsers = () => dispatch => (
   new Promise((resolve, reject) => {
-    fetchPost('/login', {
-      username,
-      password,
-    }).then((response) => {
+    fetchGet('/users').then((response) => {
       if (response.status !== 200) {
         response.json().then((json) => {
           let message = json.message
@@ -19,50 +16,14 @@ export const loginUser = (username, password) => dispatch => (
         return
       }
 
-      dispatch({
-        type: types.LOGIN_USER,
-        user: {
-          username,
-        },
-      })
-
-      resolve()
-    })
-  })
-)
-
-export const logoutUser = () => dispatch => (
-  new Promise((resolve) => {
-    fetchGet('/logout').then(() => {
-      dispatch({
-        type: types.LOGOUT_USER,
-      })
-
-      resolve()
-    })
-  })
-)
-
-export const changePassword = password => dispatch => (
-  new Promise((resolve, reject) => {
-    fetchPost('/profile/password', {
-      password,
-    }).then((response) => {
-      if (response.status !== 200) {
-        response.json().then((json) => {
-          let message = json.message
-          if (Array.isArray(message)) {
-            message = message.join()
-          }
-          reject(message)
+      response.json().then((users) => {
+        dispatch({
+          type: types.LOAD_USERS,
+          users,
         })
-        return
-      }
 
-      dispatch(showMessage('Password is updated successfully.'))
-        .then(() => {
-          resolve()
-        })
+        resolve()
+      })
     })
   })
 )

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import { loginUser } from 'App/actions/users'
+import { loginUser } from 'App/actions/user'
 import LoginView from '../components/LoginView'
 
 class LoginContainer extends Component {

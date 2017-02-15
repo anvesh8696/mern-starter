@@ -5,6 +5,7 @@ import Home from './Home'
 import Feature from './Feature'
 import Login from './Login'
 import Profile from './Profile'
+import User from './User'
 import NotFound from './NotFound'
 
 export default (store) => {
@@ -28,6 +29,16 @@ export default (store) => {
     callback()
   }
 
+  const requireAdmin = (nextState, replace, callback) => {
+    const { user } = store.getState()
+    if (!user || !user.isAdmin) {
+      replace({
+        pathname: '/',
+      })
+    }
+    callback()
+  }
+
   return (
     <Route path="/" component={CoreLayout}>
       <IndexRoute component={Home} />
@@ -35,6 +46,10 @@ export default (store) => {
       <Route path="login" component={Login} onEnter={requireGuest} />
       <Route onEnter={requireAuth}>
         <Route path="profile" component={Profile} />
+        <Route path="users" onEnter={requireAdmin}>
+          <IndexRoute component={User.List} />
+          <Route path=":id" component={User.Edit} />
+        </Route>
       </Route>
       <Route path="*" component={NotFound} />
     </Route>

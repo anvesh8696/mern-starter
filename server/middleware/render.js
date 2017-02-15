@@ -16,14 +16,14 @@ const renderFullPage = (html, preloadedState) => (
       <meta name="mobile-web-app-capable" content="yes">
       <title>MERN Starter</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <link rel="stylesheet" href="app.css">
+      <link rel="stylesheet" href="/app.css">
     </head>
     <body>
       <div id="root" style="height: 100%">${html}</div>
       <script>
         window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
       </script>
-      <script type="text/javascript" src="app.js"></script>
+      <script type="text/javascript" src="/app.js"></script>
     </body>
   </html>
   `
@@ -35,6 +35,7 @@ const renderApp = (req, res, next) => {
   if (req.isAuthenticated()) {
     initialState.user = {
       username: req.user.username,
+      isAdmin: req.user.isAdmin(),
     }
   }
 

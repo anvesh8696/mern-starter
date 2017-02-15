@@ -27,7 +27,10 @@ const postLogin = (req, res, next) => {
           return next(err)
         }
 
-        return res.status(200).end()
+        return res.status(200).json({
+          username: user.username,
+          isAdmin: user.isAdmin(),
+        })
       })
     })(req, res, next)
   })
