@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { loadUsers } from 'App/actions/users'
-import ListItem from '../components/ListItem'
+import ListTable from '../components/ListTable'
 
 class ListContainer extends Component {
   static propTypes = {
@@ -16,28 +16,10 @@ class ListContainer extends Component {
   render() {
     const { users } = this.props
 
-    const items = users.map((user, index) => (
-      // eslint-disable-next-line no-underscore-dangle
-      <ListItem key={user._id} index={index + 1} {...user} />
-    ))
-
     return (
       <div>
         <h2>Users</h2>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Username</th>
-              <th>Type</th>
-              <th>Created At</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {items}
-          </tbody>
-        </table>
+        <ListTable users={users} />
       </div>
     )
   }
