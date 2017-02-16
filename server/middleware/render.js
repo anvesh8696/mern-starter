@@ -1,6 +1,7 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
+import match from 'react-router/lib/match'
+import RouterContext from 'react-router/lib/RouterContext'
 
 import createStore from 'App/store'
 import createRoutes from 'App/routes'

@@ -1,5 +1,6 @@
 import expect from 'expect'
-import { match, createMemoryHistory } from 'react-router'
+import match from 'react-router/lib/match'
+import createMemoryHistory from 'react-router/lib/createMemoryHistory'
 import configStore from 'redux-mock-store'
 
 import createRoutes from 'App/routes'

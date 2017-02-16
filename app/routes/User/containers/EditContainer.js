@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
+import browserHistory from 'react-router/lib/browserHistory'
 import { addUser, updateUser } from 'App/actions/users'
 import { getUser } from 'App/actions/userUpdated'
 import EditView from '../components/EditView'

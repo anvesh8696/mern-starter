@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { IndexLink, Link } from 'react-router'
+import IndexLink from 'react-router/lib/IndexLink'
+import Link from 'react-router/lib/Link'
 import { logoutUser } from 'App/actions/user'
 
 const Header = ({ user, logoutUser }) => ( // eslint-disable-line no-shadow

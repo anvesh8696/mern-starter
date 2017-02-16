@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { browserHistory, Router } from 'react-router'
+import browserHistory from 'react-router/lib/browserHistory'
+import Router from 'react-router/lib/Router'
 
 import createStore from 'App/store'
 import createRoutes from 'App/routes'
