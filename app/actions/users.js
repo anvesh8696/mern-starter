@@ -1,108 +1,52 @@
 import * as types from './types'
-import { fetchGet, fetchPost, fetchPut, fetchDelete } from './helpers'
-import { showMessage } from './messages'
 
-export const loadUsers = () => dispatch => (
-  new Promise((resolve, reject) => {
-    fetchGet('/users').then((response) => {
-      if (response.status !== 200) {
-        response.json().then((json) => {
-          let message = json.message
-          if (Array.isArray(message)) {
-            message = message.join()
-          }
-          reject(message)
-        })
-        return
-      }
+export const loadUsersRequest = () => ({
+  type: types.LOAD_USERS_REQUEST,
+})
 
-      response.json().then((users) => {
-        dispatch({
-          type: types.LOAD_USERS,
-          users,
-        })
+export const loadUsers = users => ({
+  type: types.LOAD_USERS,
+  users,
+})
 
-        resolve()
-      })
-    })
-  })
-)
+export const addUserRequest = user => ({
+  type: types.ADD_USER_REQUEST,
+  user,
+})
 
-export const addUser = user => dispatch => (
-  new Promise((resolve, reject) => {
-    fetchPost('/users', {
-      username: user.username,
-      password: user.password,
-      type: user.type,
-    }).then((response) => {
-      if (response.status !== 200) {
-        response.json().then((json) => {
-          let message = json.message
-          if (Array.isArray(message)) {
-            message = message.join()
-          }
-          reject(message)
-        })
-        return
-      }
+export const addUser = user => ({
+  type: types.ADD_USER,
+  user,
+})
 
-      response.json().then((userAdded) => {
-        dispatch({
-          type: types.ADD_USER,
-          user: userAdded,
-        })
+export const getUserRequest = id => ({
+  type: types.GET_USER_REQUEST,
+  id,
+})
 
-        dispatch(showMessage('User is added successfully.'))
+export const getUser = user => ({
+  type: types.GET_USER,
+  user,
+})
 
-        resolve()
-      })
-    })
-  })
-)
+export const updateUserRequest = (id, user) => ({
+  type: types.UPDATE_USER_REQUEST,
+  id,
+  user,
+})
 
-export const updateUser = (id, user) => dispatch => (
-  new Promise((resolve, reject) => {
-    fetchPut(`/users/${id}`, {
-      password: user.password,
-      type: user.type,
-    }).then((response) => {
-      if (response.status !== 200) {
-        response.json().then((json) => {
-          let message = json.message
-          if (Array.isArray(message)) {
-            message = message.join()
-          }
-          reject(message)
-        })
-        return
-      }
+export const updateUser = (id, user) => ({
+  type: types.UPDATE_USER,
+  id,
+  user,
+})
 
-      response.json().then((userUpdated) => {
-        dispatch({
-          type: types.UPDATE_USER,
-          id,
-          user: userUpdated,
-        })
+export const deleteUserRequest = id => ({
+  type: types.DELETE_USER_REQUEST,
+  id,
+})
 
-        dispatch(showMessage('User is updated successfully.'))
-
-        resolve()
-      })
-    })
-  })
-)
-
-export const deleteUser = id => dispatch => (
-  new Promise((resolve) => {
-    fetchDelete(`/users/${id}`).then(() => {
-      dispatch({
-        type: types.DELETE_USER,
-        id,
-      })
-
-      dispatch(showMessage('User is deleted successfully.'))
-
-      resolve()
-    })
-  })
-)
+export const deleteUser = id => ({
+  type: types.DELETE_USER,
+  id,
+})

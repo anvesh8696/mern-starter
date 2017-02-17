@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Link from 'react-router/lib/Link'
-import { loadUsers, deleteUser } from 'App/actions/users'
+import { loadUsersRequest, deleteUserRequest } from 'App/actions/users'
 import ListTable from '../components/ListTable'
 
 class ListContainer extends Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    loadUsersRequest: PropTypes.func.isRequired,
+    deleteUserRequest: PropTypes.func.isRequired,
     users: PropTypes.arrayOf(PropTypes.object).isRequired,
   }
 
@@ -17,11 +18,11 @@ class ListContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(loadUsers())
+    this.props.loadUsersRequest()
   }
 
   onDelete(id) {
-    this.props.dispatch(deleteUser(id))
+    this.props.deleteUserRequest(id)
   }
 
   render() {
@@ -43,4 +44,9 @@ const mapStateToProps = state => ({
   users: state.users,
 })
 
-export default connect(mapStateToProps)(ListContainer)
+const mapDispatchToProps = {
+  loadUsersRequest,
+  deleteUserRequest,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListContainer)

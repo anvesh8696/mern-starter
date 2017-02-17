@@ -6,6 +6,7 @@ const baseConfig = require('./webpack.base.config')
 module.exports = extend(true, {}, baseConfig, {
   entry: {
     server: [
+      'babel-polyfill',
       projectConfig.paths.server('index.js'),
     ],
   },

@@ -6,7 +6,6 @@ class EditView extends Component {
   static propTypes = {
     isAdding: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
-    error: PropTypes.string.isRequired,
     onSubmit: PropTypes.func.isRequired,
   }
 
@@ -122,21 +121,11 @@ class EditView extends Component {
                   validate={this.validateType}
                   onChange={this.handleChangeType}
                 />
-                <div className={`form-group ${!this.props.error ? 'no-margin-bottom' : ''}`}>
+                <div className="form-group no-margin-bottom">
                   <div className="col-sm-9 col-sm-offset-3">
                     <button type="submit" className="btn btn-default" disabled={isSubmitDisabled}>Save</button>
                   </div>
                 </div>
-                {
-                  this.props.error &&
-                  <div className="form-group no-margin-bottom">
-                    <div className="col-sm-9 col-sm-offset-3">
-                      <p className="text-danger no-margin-bottom">
-                        {this.props.error}
-                      </p>
-                    </div>
-                  </div>
-                }
               </form>
             </div>
           </div>

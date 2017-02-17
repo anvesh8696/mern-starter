@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import IndexLink from 'react-router/lib/IndexLink'
 import Link from 'react-router/lib/Link'
-import { logoutUser } from 'App/actions/user'
+import { logoutUserRequest } from 'App/actions/user'
 
-const Header = ({ user, logoutUser }) => ( // eslint-disable-line no-shadow
+const Header = ({ user, logoutUserRequest }) => ( // eslint-disable-line no-shadow
   <nav className="navbar navbar-default">
     <div className="container-fluid">
       <div className="navbar-header">
@@ -37,7 +37,7 @@ const Header = ({ user, logoutUser }) => ( // eslint-disable-line no-shadow
                 </Link>
               </li>
               <li>
-                <Link to="/" onClick={logoutUser}>Logout</Link>
+                <Link to="/" onClick={logoutUserRequest}>Logout</Link>
               </li>
             </ul>
           ) : (
@@ -55,7 +55,7 @@ const Header = ({ user, logoutUser }) => ( // eslint-disable-line no-shadow
 
 Header.propTypes = {
   user: PropTypes.object,
-  logoutUser: PropTypes.func.isRequired,
+  logoutUserRequest: PropTypes.func.isRequired,
 }
 
 Header.defaultProps = {
@@ -66,4 +66,4 @@ const mapStateToProps = state => ({
   user: state.user,
 })
 
-export default connect(mapStateToProps, { logoutUser })(Header)
+export default connect(mapStateToProps, { logoutUserRequest })(Header)

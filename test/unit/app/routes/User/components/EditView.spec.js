@@ -51,15 +51,4 @@ describe('<EditView />', () => {
     spy.restore()
     expect.restoreSpies()
   })
-
-  it('should show error', () => {
-    const errorMessage = 'error message'
-    props.error = errorMessage
-
-    const wrapper = shallow(<EditView {...props} />)
-
-    const errorBox = wrapper.find('.text-danger')
-    expect(errorBox.length).toBe(1)
-    expect(errorBox.text()).toBe(errorMessage)
-  })
 })

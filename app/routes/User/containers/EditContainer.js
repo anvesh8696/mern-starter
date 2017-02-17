@@ -1,23 +1,19 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import browserHistory from 'react-router/lib/browserHistory'
-import { addUser, updateUser } from 'App/actions/users'
-import { getUser } from 'App/actions/userUpdated'
+import { addUserRequest, getUserRequest, updateUserRequest } from 'App/actions/users'
 import EditView from '../components/EditView'
 
 class EditContainer extends Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    addUserRequest: PropTypes.func.isRequired,
+    updateUserRequest: PropTypes.func.isRequired,
+    getUserRequest: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props)
-
-    this.state = {
-      error: '',
-    }
 
     this.isAdding = props.params.id === undefined
 
@@ -26,27 +22,16 @@ class EditContainer extends Component {
 
   componentDidMount() {
     if (!this.isAdding) {
-      this.props.dispatch(getUser(this.props.params.id))
+      this.props.getUserRequest(this.props.params.id)
     }
   }
 
   handleSubmit(user) {
-    let promise
     if (this.isAdding) {
-      promise = this.props.dispatch(addUser(user))
+      this.props.addUserRequest(user)
     } else {
-      promise = this.props.dispatch(updateUser(this.props.params.id, user))
+      this.props.updateUserRequest(this.props.params.id, user)
     }
-
-    promise.then(() => {
-      // Redirect to users page.
-      browserHistory.push('/users')
-    })
-    .catch((error) => {
-      this.setState({
-        error,
-      })
-    })
   }
 
   render() {
@@ -62,7 +47,6 @@ class EditContainer extends Component {
         <EditView
           isAdding={this.isAdding}
           user={user}
-          error={this.state.error}
           onSubmit={this.handleSubmit}
         />
       </div>
@@ -74,4 +58,10 @@ const mapStateToProps = state => ({
   user: state.userUpdated,
 })
 
-export default connect(mapStateToProps)(EditContainer)
+const mapDispatchToProps = {
+  addUserRequest,
+  updateUserRequest,
+  getUserRequest,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditContainer)

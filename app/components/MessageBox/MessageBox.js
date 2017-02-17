@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { hideMessage } from 'App/actions/messages'
 import Message from './Message'
 
-const MessageBox = ({ messages, dispatch }) => {
+const MessageBox = ({ messages, hideMessage }) => { // eslint-disable-line no-shadow
   const handleDismiss = (messageId) => {
-    dispatch(hideMessage(messageId))
+    hideMessage(messageId)
   }
 
   return (
@@ -19,11 +19,11 @@ const MessageBox = ({ messages, dispatch }) => {
 
 MessageBox.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.object).isRequired,
-  dispatch: PropTypes.func.isRequired,
+  hideMessage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   messages: state.messages,
 })
 
-export default connect(mapStateToProps)(MessageBox)
+export default connect(mapStateToProps, { hideMessage })(MessageBox)

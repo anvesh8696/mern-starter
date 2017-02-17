@@ -1,25 +1,15 @@
 import * as types from './types'
 
-let globalMessageId = 0
+export const showMessageRequest = message => ({
+  type: types.SHOW_MESSAGE_REQUEST,
+  message,
+})
 
-export const showMessage = (message, timeout = 3000) => dispatch => (
-  new Promise((resolve) => {
-    globalMessageId += 1
-
-    const messageId = globalMessageId
-
-    dispatch({
-      type: types.SHOW_MESSAGE,
-      messageId,
-      message,
-    })
-
-    setTimeout(() => {
-      dispatch(hideMessage(messageId)) // eslint-disable-line no-use-before-define
-      resolve()
-    }, timeout)
-  })
-)
+export const showMessage = (messageId, message) => ({
+  type: types.SHOW_MESSAGE,
+  messageId,
+  message,
+})
 
 export const hideMessage = messageId => ({
   type: types.HIDE_MESSAGE,

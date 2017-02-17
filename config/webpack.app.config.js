@@ -8,6 +8,7 @@ let plugins
 
 if (projectConfig.globals.__DEV__) {
   entry = [
+    'babel-polyfill',
     'react-hot-loader/patch',
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
     projectConfig.paths.app('index.js'),
@@ -23,6 +24,7 @@ if (projectConfig.globals.__DEV__) {
   ]
 } else {
   entry = [
+    'babel-polyfill',
     projectConfig.paths.app('index.js'),
   ]
 

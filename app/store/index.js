@@ -1,12 +1,16 @@
 import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
 import rootReducer from 'App/reducers'
+import rootSaga from 'App/sagas'
 
 export default (initialState = {}) => {
+  // Create the saga middleware
+  const sagaMiddleware = createSagaMiddleware()
+
   const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(thunk) // eslint-disable-line comma-dangle
+    applyMiddleware(sagaMiddleware) // eslint-disable-line comma-dangle
   )
 
   if (module.hot) {
@@ -15,6 +19,8 @@ export default (initialState = {}) => {
       store.replaceReducer(nextReducer)
     })
   }
+
+  sagaMiddleware.run(rootSaga)
 
   return store
 }
