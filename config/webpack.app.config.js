@@ -15,6 +15,11 @@ if (projectConfig.globals.__DEV__) {
 
   plugins = [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: 'Infinity',
+      filename: 'vendor.js',
+    }),
   ]
 } else {
   entry = [
@@ -22,6 +27,11 @@ if (projectConfig.globals.__DEV__) {
   ]
 
   plugins = [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: 'Infinity',
+      filename: 'vendor.js',
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         unused: true,
@@ -38,6 +48,10 @@ if (projectConfig.globals.__DEV__) {
 module.exports = extend(true, {}, baseConfig, {
   entry: {
     app: entry,
+    vendor: [
+      'react',
+      'react-dom',
+    ],
   },
   plugins: baseConfig.plugins.concat(plugins),
 })

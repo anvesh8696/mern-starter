@@ -24,6 +24,7 @@ const renderFullPage = (html, preloadedState) => (
       <script>
         window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
       </script>
+      <script type="text/javascript" src="/vendor.js"></script>
       <script type="text/javascript" src="/app.js"></script>
     </body>
   </html>
