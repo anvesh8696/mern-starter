@@ -10,7 +10,7 @@ MERN is your One-Stop solution which makes it easy to build universal apps. It m
 - ES2015 features and JSX syntax with [**Babel**](https://babeljs.io/).
 - Server-side rendering with [**React Router**](https://github.com/ReactTraining/react-router) 3.x.
 - [**Redux**](http://redux.js.org/) predictable state containers.
-- [**Redux Thunk**](https://github.com/gaearon/redux-thunk) for asynchronous action creators.
+- [**Redux Saga**](https://redux-saga.github.io/redux-saga/) [~~Redux Thunk~~](https://github.com/gaearon/redux-thunk) for asynchronous action creators.
 - Hot reloading using [**Webpack HMR**](https://webpack.js.org/concepts/hot-module-replacement/).
 - [**Webpack 2**](https://webpack.js.org/) for both development and production bundles.
 - [**CSS Modules**](http://glenmaddern.com/articles/css-modules) allows for modular and reusable CSS.
