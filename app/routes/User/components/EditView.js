@@ -16,9 +16,6 @@ class EditView extends Component {
 
     this.userTypes = getAllUserTypes()
 
-    this.handleChangeUsername = this.handleChangeUsername.bind(this)
-    this.handleChangePassword = this.handleChangePassword.bind(this)
-    this.handleChangeType = this.handleChangeType.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -50,25 +47,10 @@ class EditView extends Component {
     return true
   }
 
-  handleChangeUsername(username) {
-    this.setState({
-      ...this.state,
-      username,
-    })
-  }
-
-  handleChangePassword(password) {
-    this.setState({
-      ...this.state,
-      password,
-    })
-  }
-
-  handleChangeType(type) {
-    this.setState({
-      ...this.state,
-      type,
-    })
+  handleChange = field => (value) => {
+    const nextState = {}
+    nextState[field] = value
+    this.setState(nextState)
   }
 
   handleSubmit(event) {
@@ -78,10 +60,11 @@ class EditView extends Component {
 
   render() {
     const { isAdding } = this.props
+    const { username, password, type } = this.state
 
-    const isUsernameValid = this.validateUsername(this.state.username)
-    const isPasswordValid = this.validatePassword(this.state.password)
-    const isTypeValid = this.validateType(this.state.type)
+    const isUsernameValid = this.validateUsername(username)
+    const isPasswordValid = this.validatePassword(password)
+    const isTypeValid = this.validateType(type)
     const isSubmitDisabled =
       isUsernameValid !== true ||
       isPasswordValid !== true ||
@@ -98,9 +81,9 @@ class EditView extends Component {
                     <FormGroup
                       id="username"
                       label="Username"
-                      value={this.state.username}
+                      value={username}
                       validate={this.validateUsername}
-                      onChange={this.handleChangeUsername}
+                      onChange={this.handleChange('username')}
                     />
                   )
                 }
@@ -108,18 +91,18 @@ class EditView extends Component {
                   type="password"
                   id="password"
                   label="Password"
-                  value={this.state.password}
+                  value={password}
                   validate={this.validatePassword}
-                  onChange={this.handleChangePassword}
+                  onChange={this.handleChange('password')}
                 />
                 <FormGroup
                   type="select"
                   id="type"
                   label="Type"
-                  value={this.state.type}
+                  value={type}
                   options={this.userTypes}
                   validate={this.validateType}
-                  onChange={this.handleChangeType}
+                  onChange={this.handleChange('type')}
                 />
                 <div className="form-group no-margin-bottom">
                   <div className="col-sm-9 col-sm-offset-3">
