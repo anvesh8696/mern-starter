@@ -15,7 +15,7 @@ describe('AuthController', () => {
 
       function MockStrategy(verify) {
         this.name = 'local'
-        this._verify = verify // eslint-disable-line no-underscore-dangle
+        this._verify = verify
       }
 
       util.inherits(MockStrategy, Strategy)
@@ -31,7 +31,6 @@ describe('AuthController', () => {
           return this.success(user, info)
         }
 
-        // eslint-disable-next-line no-underscore-dangle
         this._verify(req.body.username, req.body.password, verfied)
       }
 

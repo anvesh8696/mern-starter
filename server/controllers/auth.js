@@ -6,14 +6,14 @@ const postLogin = (req, res, next) => {
   req.assert('username', 'Username cannot be blank.').notEmpty()
   req.assert('password', 'Password cannot be blank.').notEmpty()
 
-  req.getValidationResult().then((result) => { // eslint-disable-line consistent-return
+  req.getValidationResult().then((result) => {
     if (!result.isEmpty()) {
       // Return an array of validation error messages.
       const message = result.useFirstErrorOnly().array().map(error => error.msg)
       return res.status(400).json({ message })
     }
 
-    passport.authenticate('local', (err, user, info) => { // eslint-disable-line consistent-return
+    passport.authenticate('local', (err, user, info) => {
       if (err) {
         return next(err)
       }
@@ -44,14 +44,13 @@ const getLogout = (req, res) => {
 const postChangePassword = (req, res, next) => {
   req.assert('password', 'Password cannot be blank.').notEmpty()
 
-  req.getValidationResult().then((result) => { // eslint-disable-line consistent-return
+  req.getValidationResult().then((result) => {
     if (!result.isEmpty()) {
       // Return an array of validation error messages.
       const message = result.useFirstErrorOnly().array().map(error => error.msg)
       return res.status(400).json({ message })
     }
 
-    // eslint-disable-next-line consistent-return, no-underscore-dangle
     User.findById(req.user._id, (err, user) => {
       if (err) {
         return next(err)

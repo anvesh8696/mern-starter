@@ -45,7 +45,6 @@ const renderApp = (req, res, next) => {
 
   const routes = createRoutes(store)
 
-  // eslint-disable-next-line consistent-return
   match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
     if (err) {
       return res.status(500)

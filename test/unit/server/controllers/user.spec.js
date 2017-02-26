@@ -132,7 +132,7 @@ describe('UserController', () => {
 
     it('should return 200 OK with user details', (done) => {
       const user = {
-        _id: 'some-user-id', // eslint-disable-line no-underscore-dangle
+        _id: 'some-user-id',
         username: 'username',
         type: USER_TYPE_USER,
         createdAt: 'some-date-time',
@@ -187,7 +187,7 @@ describe('UserController', () => {
 
     it('should return 200 OK with updated user details', (done) => {
       const user = {
-        _id: 'some-user-id', // eslint-disable-line no-underscore-dangle
+        _id: 'some-user-id',
         username: 'username',
         type: USER_TYPE_USER,
         createdAt: 'some-date-time',

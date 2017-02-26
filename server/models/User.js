@@ -20,13 +20,13 @@ const userSchema = new mongoose.Schema({
 /**
  * Password hash middleware.
  */
-userSchema.pre('save', function save(next) { // eslint-disable-line consistent-return
+userSchema.pre('save', function save(next) {
   const user = this
   if (!user.isModified('password')) {
     return next()
   }
 
-  bcrypt.genSalt(10, (err, salt) => { // eslint-disable-line consistent-return
+  bcrypt.genSalt(10, (err, salt) => {
     if (err) {
       return next(err)
     }

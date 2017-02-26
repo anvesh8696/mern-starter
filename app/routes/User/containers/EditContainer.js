@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { addUserRequest, getUserRequest, updateUserRequest } from 'App/actions/users'
+import { USER_TYPE_USER } from 'Server/constants'
 import EditView from '../components/EditView'
 
 class EditContainer extends Component {
@@ -54,9 +55,23 @@ class EditContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.userUpdated,
-})
+const mapStateToProps = (state, ownProps) => {
+  let user
+  if (ownProps.params.id === undefined) {
+    user = {
+      username: '',
+      password: '',
+      type: USER_TYPE_USER,
+    }
+  } else {
+    user = state.users.find(_user => _user._id === ownProps.params.id)
+    user.password = ''
+  }
+
+  return {
+    user,
+  }
+}
 
 const mapDispatchToProps = {
   addUserRequest,

@@ -14,7 +14,7 @@ passport.deserializeUser((id, done) => {
 })
 
 passport.use(new LocalStrategy((username, password, done) => {
-  User.findOne({ username }, (err, user) => { // eslint-disable-line consistent-return
+  User.findOne({ username }, (err, user) => {
     if (err) {
       return done(err)
     }

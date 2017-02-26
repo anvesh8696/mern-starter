@@ -27,6 +27,12 @@
         "allow": ["log"]
       }
     ],
+    "no-underscore-dangle": [
+      0
+    ],
+    "consistent-return": [
+      0
+    ],
     "react/jsx-filename-extension": [
       2,
       {
