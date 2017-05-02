@@ -59,15 +59,21 @@ const renderApp = (req, res, next) => {
       return next()
     }
 
-    const html = renderToString(
-      <AppContainer store={store}>
-        <RouterContext {...renderProps} />
-      </AppContainer> // eslint-disable-line comma-dangle
-    )
+    const components = renderProps.components
+    const Comp = components[components.length - 1].WrappedComponent
+    const fetchData = (Comp && Comp.fetchData) || (() => Promise.resolve)
 
-    const preloadedState = store.getState()
+    fetchData({ store, params: renderProps.params }).then(() => {
+      const html = renderToString(
+        <AppContainer store={store}>
+          <RouterContext {...renderProps} />
+        </AppContainer> // eslint-disable-line comma-dangle
+      )
 
-    res.send(renderFullPage(html, preloadedState))
+      const preloadedState = store.getState()
+
+      res.send(renderFullPage(html, preloadedState))
+    })
   })
 }
 
